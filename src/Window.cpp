@@ -228,7 +228,7 @@ namespace lysa::ui {
     }
 
     void Window::refresh() const {
-        // if (windowManager) { windowManager->refresh(); }
+        if (windowManager) { windowManager->refresh(); }
     }
 
     void Window::setFocusedWidget(const std::shared_ptr<Widget> &W) {

@@ -110,8 +110,8 @@ namespace lysa::ui {
             if (renderingWindow.isMouseHidden()) {
                 return false;
             }
-            const auto scaleX = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRect().width;
-            const auto scaleY = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRect().height;
+            const auto scaleX = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRenderTarget().getWidth();
+            const auto scaleY = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRenderTarget().getHeight();
 
             if (inputEvent.type == InputEventType::MOUSE_MOTION) {
                 auto mouseEvent = std::get<InputEventMouseMotion>(inputEvent.data);
