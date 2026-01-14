@@ -6,6 +6,7 @@
 */
 export module lysa.ui.text_edit;
 
+import lysa.context;
 import lysa.exception;
 import lysa.input_event;
 import lysa.types;
@@ -18,7 +19,7 @@ export namespace lysa::ui {
 
     class TextEdit : public Widget {
     public:
-        explicit TextEdit(const std::string& text = "");
+        TextEdit(Context& ctx, const std::string& text = "");
 
         auto isReadOnly() const { return readonly; }
 

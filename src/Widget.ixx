@@ -6,6 +6,7 @@
 */
 export module lysa.ui.widget;
 
+import lysa.context;
 import lysa.exception;
 import lysa.rect;
 import lysa.input_event;
@@ -102,7 +103,7 @@ namespace lysa::ui {
         };
 
         /** Creates a widget of a particular type */
-        Widget(Type = WIDGET);
+        Widget(Context& ctx, Type = WIDGET);
 
         virtual ~Widget() = default;
 
@@ -298,6 +299,7 @@ namespace lysa::ui {
 
     protected:
         friend class Window;
+        Context& ctx;
         const Type type;
         Rect rect;
         Rect defaultRect;

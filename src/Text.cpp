@@ -11,8 +11,8 @@ import lysa.ui.window_manager;
 
 namespace lysa::ui {
 
-    Text::Text(const std::string& text) :
-        Widget{TEXT},
+    Text::Text(Context& ctx, const std::string& text) :
+        Widget{ctx, TEXT},
         text{std::move(text)} {
         allowChildren  = false;
         drawBackground = false;

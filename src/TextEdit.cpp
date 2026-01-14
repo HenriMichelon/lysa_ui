@@ -8,8 +8,8 @@ module lysa.ui.text_edit;
 
 namespace lysa::ui {
 
-    TextEdit::TextEdit(const std::string& text):
-        Widget{TEXTEDIT},
+    TextEdit::TextEdit(Context& ctx, const std::string& text):
+        Widget{ctx, TEXTEDIT},
         text{text} {
     }
 

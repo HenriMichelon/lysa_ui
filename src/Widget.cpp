@@ -17,7 +17,7 @@ import lysa.ui.window;
 
 namespace lysa::ui {
 
-    Widget::Widget(const Type T) : type{T} {}
+    Widget::Widget(Context& ctx, const Type T) : ctx(ctx), type{T} {}
 
     void Widget::_draw(Vector2DRenderer &R) const {
         if (!isVisible()) {

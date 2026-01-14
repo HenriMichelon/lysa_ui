@@ -11,14 +11,14 @@ import lysa.ui.window_manager;
 
 namespace lysa::ui {
 
-    Image::Image(const lysa::Image& image, const bool autoSize) :
-        Widget{IMAGE},
+    Image::Image(Context& ctx, const lysa::Image& image, const bool autoSize) :
+        Widget{ctx, IMAGE},
         autoSize{autoSize} {
         setImage(image);
     }
 
-    Image::Image(const bool autoSize) :
-        Widget{IMAGE},
+    Image::Image(Context& ctx, const bool autoSize) :
+        Widget{ctx, IMAGE},
         autoSize{autoSize} {
     }
 

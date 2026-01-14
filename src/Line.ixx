@@ -6,6 +6,7 @@
 */
 export module lysa.ui.line;
 
+import lysa.context;
 import lysa.ui.widget;
 
 export namespace lysa::ui {
@@ -16,7 +17,7 @@ export namespace lysa::ui {
     public:
         enum LineStyle { HORIZ, VERT };
 
-        Line(LineStyle style = HORIZ);
+        Line(Context& ctx, LineStyle style = HORIZ);
 
         auto getStyle() const { return style; }
 
@@ -28,11 +29,11 @@ export namespace lysa::ui {
 
     class HLine : public Line {
     public:
-        HLine() : Line(HORIZ) {}
+        HLine(Context& ctx) : Line(ctx, HORIZ) {}
     };
 
     class VLine : public Line {
     public:
-        VLine() : Line(VERT) {}
+        VLine(Context& ctx) : Line(ctx, VERT) {}
     };
 }

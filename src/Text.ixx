@@ -6,6 +6,7 @@
 */
 export module lysa.ui.text;
 
+import lysa.context;
 import lysa.math;
 import lysa.rect;
 import lysa.ui.widget;
@@ -17,7 +18,7 @@ export namespace lysa::ui {
      */
     class Text : public Widget {
     public:
-        Text(const std::string& text);
+        Text(Context& ctx, const std::string& text);
 
         const auto& getText() const { return text; }
 

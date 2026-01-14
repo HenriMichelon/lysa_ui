@@ -6,6 +6,7 @@
 */
 export module lysa.ui.toggle_button;
 
+import lysa.context;
 import lysa.input_event;
 import lysa.ui.check_widget;
 
@@ -15,7 +16,7 @@ export namespace lysa::ui {
      */
     class ToggleButton : public CheckWidget {
     public:
-        ToggleButton();
+        ToggleButton(Context& ctx);
 
     protected:
         bool eventMouseUp(MouseButton button, float x, float y) override;

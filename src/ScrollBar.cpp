@@ -9,19 +9,20 @@ module lysa.ui.scroll_bar;
 namespace lysa::ui {
 
     ScrollBar::ScrollBar(
+        Context& ctx,
         const Type type,
         const float min,
         const float max,
         const float value,
         const float step):
-        ValueSelect{SCROLLBAR, min, max, value, step},
+        ValueSelect{ctx, SCROLLBAR, min, max, value, step},
         type{type} {
     }
 
     void ScrollBar::setResources(const std::string& area, const std::string& cage) {
         if (liftArea == nullptr) {
-            liftArea = std::make_shared<Box>();
-            liftCage = std::make_shared<Box>();
+            liftArea = std::make_shared<Box>(ctx);
+            liftCage = std::make_shared<Box>(ctx);
             mouseMoveOnFocus = true;
             add(liftArea, FILL, area);
             add(liftCage, NONE, cage);

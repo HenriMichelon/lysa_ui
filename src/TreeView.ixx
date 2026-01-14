@@ -6,6 +6,7 @@
 */
 export module lysa.ui.tree_view;
 
+import lysa.context;
 import lysa.exception;
 import lysa.ui.box;
 import lysa.ui.panel;
@@ -26,10 +27,10 @@ export namespace lysa::ui {
             bool selected{false};
             bool expanded{false};
 
-            explicit Item(std::shared_ptr<Widget> item) : item{item} {}
+            Item(Context& ctx, std::shared_ptr<Widget> item) : Panel(ctx), item{item} {}
         };
 
-        TreeView();
+        TreeView(Context& ctx);
 
         void setResources(const std::string& resBox, const std::string& resScroll, const std::string&);
 

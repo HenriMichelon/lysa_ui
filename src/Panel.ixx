@@ -6,6 +6,7 @@
 */
 export module lysa.ui.panel;
 
+import lysa.context;
 import lysa.ui.widget;
 
 export namespace lysa::ui {
@@ -15,10 +16,10 @@ export namespace lysa::ui {
      */
     class Panel: public Widget {
     public:
-        Panel(): Widget(PANEL) {}
+        Panel(Context& ctx): Widget(ctx, PANEL) {}
 
     protected:
-        Panel(const Type type): Widget(type) {}
+        Panel(Context& ctx, const Type type): Widget(ctx, type) {}
     };
 
 }

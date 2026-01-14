@@ -18,7 +18,8 @@ import lysa.ui.window_manager;
 
 namespace lysa::ui {
 
-    Window::Window(const Rect& rect):
+    Window::Window(Context& ctx, const Rect& rect):
+        ctx(ctx),
         rect{rect} {
     }
 
@@ -71,7 +72,7 @@ namespace lysa::ui {
         assert([&]{ return windowManager != nullptr;} , "ui::Window must be added to a Window manager before setting the main widget");
         if (layout == nullptr) { setStyle(nullptr); }
         if (widget == nullptr) {
-            widget = std::make_shared<Widget>();
+            widget = std::make_shared<Widget>(ctx);
         } else {
             widget = std::move(child);
         }

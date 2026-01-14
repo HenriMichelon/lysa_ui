@@ -6,6 +6,7 @@
 */
 export module lysa.ui.value_select;
 
+import lysa.context;
 import lysa.ui.widget;
 
 export namespace lysa::ui {
@@ -13,6 +14,7 @@ export namespace lysa::ui {
     class ValueSelect : public Widget {
     public:
         ValueSelect(
+            Context& ctx,
             Type type,
             float min,
             float max,

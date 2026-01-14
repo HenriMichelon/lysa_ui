@@ -12,12 +12,13 @@ import lysa.ui.event;
 namespace lysa::ui {
 
     ValueSelect::ValueSelect(
+        Context& ctx,
         const Type type,
         const float min,
         const float max,
         const float value,
         const float step):
-        Widget{type},
+        Widget{ctx, type},
         min{min},
         max{max},
         value{value},

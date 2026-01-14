@@ -7,6 +7,7 @@
 export module lysa.ui.style;
 
 import std;
+import lysa.context;
 import lysa.rect;
 import lysa.resources.font;
 import lysa.renderers.vector_2d;

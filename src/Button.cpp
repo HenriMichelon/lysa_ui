@@ -6,12 +6,11 @@
 */
 module lysa.ui.button;
 
-import lysa.input_event;
 import lysa.ui.event;
 
 namespace lysa::ui {
 
-    Button::Button(): Box{BUTTON} {
+    Button::Button(Context& ctx): Box{ctx, BUTTON} {
         moveChildrenOnPush = true;
         redrawOnMouseEvent = true;
         allowFocus = true;

@@ -6,6 +6,7 @@
 */
 export module lysa.ui.scroll_bar;
 
+import lysa.context;
 import lysa.input_event;
 import lysa.rect;
 import lysa.types;
@@ -26,6 +27,7 @@ export namespace lysa::ui {
         };
 
         ScrollBar(
+            Context& ctx,
             Type type = HORIZONTAL,
             float min = 0,
             float max = 100,
@@ -60,15 +62,15 @@ export namespace lysa::ui {
 
     class VScrollBar : public ScrollBar {
     public:
-        explicit VScrollBar(const float min = 0, const float max = 100, const float value = 0, const float step = 1):
-            ScrollBar(VERTICAL, min, max, value, step) {
+        VScrollBar(Context& ctx, const float min = 0, const float max = 100, const float value = 0, const float step = 1):
+            ScrollBar(ctx, VERTICAL, min, max, value, step) {
         }
     };
 
     class HScrollBar : public ScrollBar {
     public:
-        explicit HScrollBar(const float min = 0, const float max = 100, const float value = 0, const float step = 1):
-            ScrollBar(HORIZONTAL, min, max, value, step) {
+        HScrollBar(Context& ctx, const float min = 0, const float max = 100, const float value = 0, const float step = 1):
+            ScrollBar(ctx, HORIZONTAL, min, max, value, step) {
         }
     };
 

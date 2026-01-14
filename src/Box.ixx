@@ -6,6 +6,7 @@
 */
 export module lysa.ui.box;
 
+import lysa.context;
 import lysa.ui.panel;
 
 export namespace lysa::ui {
@@ -15,10 +16,10 @@ export namespace lysa::ui {
      */
     class Box: public Panel {
     public:
-        Box(): Panel{BOX} {}
+        Box(Context& ctx): Panel{ctx, BOX} {}
 
     protected:
-        Box(const Type type): Panel{type} {}
+        Box(Context& ctx, const Type type): Panel{ctx, type} {}
     };
 
 }

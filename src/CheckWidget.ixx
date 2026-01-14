@@ -6,6 +6,8 @@
 */
 export module lysa.ui.check_widget;
 
+import lysa.context;
+import lysa.input_event;
 import lysa.ui.widget;
 
 export namespace lysa::ui {
@@ -29,7 +31,7 @@ export namespace lysa::ui {
         virtual void setState(State newState);
 
     protected:
-        explicit CheckWidget(const Type type): Widget{type} { }
+        explicit CheckWidget(Context& ctx, const Type type): Widget{ctx, type} { }
 
         bool eventMouseDown(MouseButton button, float x, float y) override;
 

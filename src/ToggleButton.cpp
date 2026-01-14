@@ -10,7 +10,7 @@ import lysa.ui.event;
 
 namespace lysa::ui {
 
-    ToggleButton::ToggleButton(): CheckWidget(TOGGLEBUTTON) {
+    ToggleButton::ToggleButton(Context& ctx): CheckWidget(ctx, TOGGLEBUTTON) {
         moveChildrenOnPush = true;
         redrawOnMouseEvent = true;
         allowFocus = true;

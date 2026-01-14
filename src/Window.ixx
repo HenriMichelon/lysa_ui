@@ -6,6 +6,7 @@
 */
 export module lysa.ui.window;
 
+import lysa.context;
 import lysa.input_event;
 import lysa.math;
 import lysa.rect;
@@ -35,7 +36,7 @@ export namespace lysa::ui {
         /**
          * Creates a virtual UI window with a given position & size
          */
-        Window(const Rect& rect);
+        Window(Context& ctx, const Rect& rect);
 
         /**
          * Sets the borders that can be used to resize the Window
@@ -257,6 +258,7 @@ export namespace lysa::ui {
         WindowManager& getWindowManager() const { return *windowManager; }
 
     private:
+        Context& ctx;
         Rect rect;
         float minWidth{2.0f};
         float minHeight{2.0f};

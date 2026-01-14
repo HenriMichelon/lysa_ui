@@ -6,6 +6,7 @@
 */
 export module lysa.ui.image;
 
+import lysa.context;
 import lysa.math;
 import lysa.rect;
 import lysa.ui.widget;
@@ -18,9 +19,9 @@ export namespace lysa::ui {
      */
     class Image : public Widget {
     public:
-        Image(const lysa::Image& image, bool autoSize = true);
+        Image(Context& ctx, const lysa::Image& image, bool autoSize = true);
 
-        Image(bool autoSize = true);
+        Image(Context& ctx, bool autoSize = true);
 
         void setAutoSize(bool autoSize);
 
