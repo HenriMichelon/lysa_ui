@@ -4,14 +4,15 @@
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
 */
-module;
 module lysa.ui.window_manager;
+
+import lysa;
 
 namespace lysa::ui {
 
     WindowManager::WindowManager(
         RenderingWindow& renderingWindow,
-        const std::string& defaultFontName,
+        const std::string& defaultFontURI,
         const float defaultFontScale,
         const float4& defaultTextColor):
         ctx{renderingWindow.getRenderTarget().getContext()},
@@ -19,8 +20,14 @@ namespace lysa::ui {
         renderer{ctx,renderingWindow.getRenderTarget().getRendererConfiguration()},
         fontScale{defaultFontScale},
         textColor{defaultTextColor} {
-        defaultFont = std::make_shared<Font>(ctx,defaultFontName);
+        defaultFont = std::make_shared<Font>(ctx, defaultFontURI);
         renderingWindow.getRenderTarget().addRenderer(renderer);
+        ctx.events.subscribe(MainLoopEvent::PROCESS, [this](const Event&) {
+           drawFrame();
+        });
+        ctx.events.subscribe(RenderingWindowEvent::INPUT, renderingWindow.id, [this](const Event& evt) {
+           onInput(std::any_cast<InputEvent>(evt.payload));
+        });
     }
 
     WindowManager::~WindowManager() {
@@ -90,7 +97,7 @@ namespace lysa::ui {
 
     bool WindowManager::onInput(const InputEvent &inputEvent) {
         if (inputEvent.type == InputEventType::KEY) {
-            const auto &keyInputEvent = std::any_cast<InputEventKey>(inputEvent.data);
+            const auto &keyInputEvent = std::get<InputEventKey>(inputEvent.data);
             if ((focusedWindow != nullptr) && (focusedWindow->isVisible())) {
                 if (keyInputEvent.pressed) {
                     return focusedWindow->eventKeyDown(keyInputEvent.key);
@@ -107,7 +114,7 @@ namespace lysa::ui {
             const auto scaleY = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRect().height;
 
             if (inputEvent.type == InputEventType::MOUSE_MOTION) {
-                auto mouseEvent = std::any_cast<InputEventMouseMotion>(inputEvent.data);
+                auto mouseEvent = std::get<InputEventMouseMotion>(inputEvent.data);
                 const auto x = mouseEvent.position.x * scaleX;
                 const auto y = mouseEvent.position.y * scaleY;
                 const auto resizeDeltaY = scaleY * resizeDelta;
@@ -176,7 +183,7 @@ namespace lysa::ui {
                     if (consumed) { return true; }
                 }
             } else {
-                auto mouseInputEvent = std::any_cast<InputEventMouseButton>(inputEvent.data);
+                auto mouseInputEvent = std::get<InputEventMouseButton>(inputEvent.data);
                 const auto x = mouseInputEvent.position.x * scaleX;
                 const auto y = mouseInputEvent.position.y * scaleY;
                 if (resizedWindow != nullptr) {
@@ -207,7 +214,7 @@ namespace lysa::ui {
                     if (consumed) { return true; }
                 }
             }
-                }
+        }
         return false;
     }
 

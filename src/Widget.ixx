@@ -13,9 +13,11 @@ import lysa.input_event;
 import lysa.types;
 import lysa.renderers.vector_2d;
 import lysa.resources.font;
+import lysa.ui.alignment;
 import lysa.ui.resource;
 
 namespace lysa::ui {
+
     /**
      * Base class for all UI widgets
      */
@@ -47,59 +49,6 @@ namespace lysa::ui {
             TREEVIEW,
             //! 2D Image
             IMAGE,
-        };
-
-        //! Widget placement (relative to the parent widget)
-        enum AlignmentType {
-            NONE,
-            //! The child widget is centered and resized to the parent content size
-            FILL,
-            //! The child widget is centered (and take all the parent content size)
-            CENTER,
-            //! The child widget is horizontally centered
-            HCENTER,
-            //! The child widget is vertically centered
-            VCENTER,
-            //! The children are stack on the top
-            TOP,
-            //! The children are stack on the bottom
-            BOTTOM,
-            //! The children are stack on the left
-            LEFT,
-            //! The children are stack on the right
-            RIGHT,
-            //! The children are stack on the top and horizontally centered
-            TOPCENTER,
-            //! The children are stack on the bottom and horizontally centered
-            BOTTOMCENTER,
-            //! The children are stack on the left and vertically centered
-            LEFTCENTER,
-            //! The children are stack on the right and vertically centered
-            RIGHTCENTER,
-            //! The children are stack on the top and left aligned
-            TOPLEFT,
-            //! The children are stack on the bottom and left aligned
-            BOTTOMLEFT,
-            //! The children are stack on the bottom and right aligned
-            BOTTOMRIGHT,
-            //! The children are stack on the top and right aligned
-            TOPRIGHT,
-            //! The children are stack on the left then on the top
-            LEFTTOP,
-            //! The children are stack on the left then on the bottom
-            LEFTBOTTOM,
-            //! The children are stack on the right then on the bottom
-            RIGHTBOTTOM,
-            //! The children are stack on the right then on the top
-            RIGHTTOP,
-            //!
-            CORNERTOPLEFT,
-            //!
-            CORNERTOPRIGHT,
-            //!
-            CORNERBOTTOMLEFT,
-            //!
-            CORNERBOTTOMRIGHT
         };
 
         /** Creates a widget of a particular type */
@@ -144,11 +93,11 @@ namespace lysa::ui {
         void setRect(const Rect &rect);
 
         /** Returns the current widget placement */
-        AlignmentType getAlignment() const;
+        Alignment getAlignment() const;
 
         /** Sets the widget placement. Calling this method involve
             redrawing the parent widget & resizing all the children widgets */
-        void setAlignment(AlignmentType alignment);
+        void setAlignment(Alignment alignment);
 
         /** Returns the current font of the widget */
         std::shared_ptr<Font> getFont() const;
@@ -166,6 +115,21 @@ namespace lysa::ui {
         /** Returns the parent widget, or nullptr */
         Widget* getParent() const { return parent; }
 
+
+        /*
+         * Creates & adds a child widget.
+         */
+        template<typename T, typename... Args>
+        std::shared_ptr<T> create(
+            const Alignment alignment,
+            const std::string & resource ,
+            Args&&... args) {
+            return add(
+                std::make_shared<T>(ctx, std::forward<Args>(args)...),
+                alignment,
+                resource);
+        }
+
         /** Adds a child widget.
               Children widgets will be destroyed on parent destruction.
                 \param child	: child widget to add
@@ -177,7 +141,7 @@ namespace lysa::ui {
         template<typename T>
         std::shared_ptr<T> add(
             std::shared_ptr<T> child,
-            const AlignmentType alignment,
+            const Alignment alignment,
             const std::string &resource = "",
             const bool overlap = false) {
             assert([&]{return window != nullptr;}, "Widget must be added to a Window before adding child");
@@ -316,7 +280,7 @@ namespace lysa::ui {
         bool redrawOnMouseMove{false};
         float transparency{1.0f};
         Widget* parent{nullptr};
-        AlignmentType alignment{NONE};
+        Alignment alignment{Alignment::NONE};
         std::shared_ptr<Resource> resource;
         std::list<std::shared_ptr<Widget>> children;
         Window* window{nullptr};
@@ -328,7 +292,7 @@ namespace lysa::ui {
 
         virtual Rect _getDefaultRect() { return defaultRect; }
 
-        virtual void _init(Widget &child, AlignmentType alignment, const std::string &res, bool overlap);
+        virtual void _init(Widget &child, Alignment alignment, const std::string &res, bool overlap);
 
     private:
         bool pushed{false};

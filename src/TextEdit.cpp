@@ -6,6 +6,8 @@
 */
 module lysa.ui.text_edit;
 
+import lysa.ui.alignment;
+
 namespace lysa::ui {
 
     TextEdit::TextEdit(Context& ctx, const std::string& text):
@@ -38,8 +40,8 @@ namespace lysa::ui {
     }
 
     void TextEdit::setResources(const std::string& resource) {
-        add(box, FILL, resource);
-        box->add(textBox, HCENTER);
+        add(box, Alignment::FILL, resource);
+        box->add(textBox, Alignment::HCENTER);
         selStart = 0;
         startPos = 0;
         computeNDispChar();

@@ -37,10 +37,10 @@ namespace lysa::ui {
 
     void Window::draw() const {
         if (!isVisible()) { return; }
-        // Vector2DRenderer& renderer = windowManager->getRenderer();
-        // renderer.setTranslate({rect.x, rect.y});
-        // renderer.setTransparency(1.0f - transparency);
-        // widget->_draw(renderer);
+        Vector2DRenderer& renderer = windowManager->getRenderer();
+        renderer.setTranslate({rect.x, rect.y});
+        renderer.setTransparency(1.0f - transparency);
+        widget->_draw(renderer);
     }
 
     void Window::unFreeze(const std::shared_ptr<Widget> &widget) {

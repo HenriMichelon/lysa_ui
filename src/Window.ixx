@@ -12,6 +12,7 @@ import lysa.math;
 import lysa.rect;
 import lysa.renderers.vector_2d;
 import lysa.resources.font;
+import lysa.ui.alignment;
 import lysa.ui.style;
 import lysa.ui.widget;
 
@@ -67,11 +68,18 @@ export namespace lysa::ui {
         */
         void setWidget(std::shared_ptr<Widget> child = nullptr, const std::string& resources = "", float padding = 0);
 
-        /** Creates & adds a child widget.
-       */
+        /*
+         * Creates & adds a child widget.
+         */
         template<typename T, typename... Args>
-        std::shared_ptr<T> create(Args&&... args) {
-            return add(std::make_shared<T>(ctx, std::forward<Args>(args)...));
+        std::shared_ptr<T> create(
+            const Alignment alignment,
+            const std::string & resource ,
+            Args&&... args) {
+            return add(
+                std::make_shared<T>(ctx, std::forward<Args>(args)...),
+                alignment,
+                resource);
         }
 
         /** Adds a child widget. Children widgets will be destroyed on parent destruction.
@@ -81,9 +89,9 @@ export namespace lysa::ui {
               \param overlap    : overlap widget on top of other widgets
        */
         template<typename T>
-        std::shared_ptr<Widget> add(
+        std::shared_ptr<T> add(
             const std::shared_ptr<T> &child,
-            const Widget::AlignmentType alignment,
+            const Alignment alignment,
             const std::string & resource = "",
             const bool overlap = false) const {
             return getWidget().add(child, alignment, resource, overlap);

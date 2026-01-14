@@ -6,6 +6,7 @@
 */
 export module lysa.ui;
 
+export import lysa.ui.alignment;
 export import lysa.ui.box;
 export import lysa.ui.button;
 export import lysa.ui.check_widget;

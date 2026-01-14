@@ -6,6 +6,8 @@
 */
 module lysa.ui.tree_view;
 
+import lysa.ui.alignment;
+
 namespace lysa::ui {
 
     TreeView::TreeView(Context& ctx): Widget(ctx, TREEVIEW) {}
@@ -14,8 +16,8 @@ namespace lysa::ui {
         if (box == nullptr) {
             box = std::make_shared<Box>(ctx);
             vScroll = std::make_shared<VScrollBar>(ctx, 0.0f, 0.0f);
-            add(vScroll, RIGHT, resScroll);
-            add(box, FILL, resBox);
+            add(vScroll, Alignment::RIGHT, resScroll);
+            add(box, Alignment::FILL, resBox);
             box->setDrawBackground(false);
             box->setPadding(1);
             vScroll->setStep(2);
@@ -30,10 +32,10 @@ namespace lysa::ui {
     std::shared_ptr<TreeView::Item>& TreeView::addItem(std::shared_ptr<Widget> item) {
         items.push_back(std::make_shared<Item>(ctx, item));
         auto& newWidget = items.back();
-        box->add(newWidget, TOPLEFT);
+        box->add(newWidget, Alignment::TOPLEFT);
         newWidget->handle = std::make_shared<Text>(ctx, " ");
-        newWidget->add(newWidget->handle, LEFT, treeTabsSize);
-        newWidget->add(item, LEFT);
+        newWidget->add(newWidget->handle,Alignment:: LEFT, treeTabsSize);
+        newWidget->add(item, Alignment::LEFT);
         newWidget->_setSize(1000.0f, item->getHeight());
         newWidget->setDrawBackground(false);
         return newWidget;
@@ -43,18 +45,18 @@ namespace lysa::ui {
         parent->children.push_back(std::make_shared<Item>(ctx, item));
         auto& newWidget = parent->children.back();
         newWidget->level = parent->level + 1;
-        box->add(newWidget, TOPLEFT);
+        box->add(newWidget, Alignment::TOPLEFT);
         for (int i = 0; i <= newWidget->level; i++) {
             if (i == (newWidget->level)) {
                 newWidget->handle = std::make_shared<Text>(ctx, " ");
-                newWidget->add(newWidget->handle, LEFT, treeTabsSize);
+                newWidget->add(newWidget->handle, Alignment::LEFT, treeTabsSize);
             }
             else {
-                newWidget->add(std::make_shared<Panel>(ctx), LEFT, treeTabsSize);
+                newWidget->add(std::make_shared<Panel>(ctx), Alignment::LEFT, treeTabsSize);
             }
         }
         parent->handle->setText("-");
-        newWidget->add(item, LEFT);
+        newWidget->add(item, Alignment::LEFT);
         newWidget->_setSize(1000.0f, item->getHeight());
         newWidget->setDrawBackground(false);
         //expand(parent->item);

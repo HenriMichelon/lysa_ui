@@ -105,6 +105,7 @@ set(LYSA_UI_SRC
 )
 set(LYSA_UI_MODULES
         ${SRC_DIR}/UI.ixx
+        ${SRC_DIR}/Alignment.ixx
         ${SRC_DIR}/Box.ixx
         ${SRC_DIR}/Button.ixx
         ${SRC_DIR}/CheckWidget.ixx

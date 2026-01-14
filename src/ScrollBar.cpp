@@ -6,6 +6,7 @@
 */
 module lysa.ui.scroll_bar;
 
+import lysa.ui.alignment;
 namespace lysa::ui {
 
     ScrollBar::ScrollBar(
@@ -24,8 +25,8 @@ namespace lysa::ui {
             liftArea = std::make_shared<Box>(ctx);
             liftCage = std::make_shared<Box>(ctx);
             mouseMoveOnFocus = true;
-            add(liftArea, FILL, area);
-            add(liftCage, NONE, cage);
+            add(liftArea, Alignment::FILL, area);
+            add(liftCage, Alignment::NONE, cage);
             // liftArea->connect(UIEvent::OnMouseDown,
             //     [this](auto p) { this->onLiftAreaDown(static_cast<const EventMouseButton *>(p)); });
             // liftCage->connect(UIEvent::OnMouseDown,

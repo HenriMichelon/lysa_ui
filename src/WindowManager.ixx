@@ -24,9 +24,9 @@ export namespace lysa::ui {
     public:
         WindowManager(
             RenderingWindow& renderingWindow,
-            const std::string& defaultFontName,
+            const std::string& defaultFontURI,
             float defaultFontScale = 1.0f,
-            const float4& defaultTextColor = float4(0.5f, 0.5f, 0.5f, 1.0f));
+            const float4& defaultTextColor = float4(1.0f, 1.0f, 1.0f, 1.0f));
 
         virtual ~WindowManager();
 
