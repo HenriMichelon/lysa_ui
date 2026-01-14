@@ -5,34 +5,23 @@
  * https://opensource.org/licenses/MIT
 */
 module;
-#ifdef _WIN32
-#include <windows.h>
-#endif
 module lysa.ui.window_manager;
 
-import lysa.math;
-import lysa.resources.font;
-import lysa.input;
-import lysa.input_event;
-import lysa.types;
 import lysa.rect;
-import lysa.resources.rendering_window;
-import lysa.renderers.vector_2d;
-import lysa.ui.window;
 
 namespace lysa::ui {
 
     WindowManager::WindowManager(
-        lysa::Window& renderingWindow,
+        RenderingWindow& renderingWindow,
         Vector2DRenderer& renderer,
         const std::string& defaultFontName,
         const float defaultFontScale,
         const float4& defaultTextColor):
-        uiRenderer{renderer},
+        renderer{renderer},
         renderingWindow{renderingWindow},
         fontScale{defaultFontScale},
         textColor{defaultTextColor} {
-        defaultFont = std::make_shared<Font>(defaultFontName);
+        defaultFont = std::make_shared<Font>(renderingWindow.getContext(), defaultFontName);
     }
 
     WindowManager::~WindowManager() {
@@ -78,7 +67,7 @@ namespace lysa::ui {
         }
         if (!needRedraw) { return; }
         needRedraw = false;
-        uiRenderer.restart();
+        renderer.restart();
         for (const auto& window: windows) {
             window->draw();
         }
@@ -100,36 +89,28 @@ namespace lysa::ui {
         removedWindows.push_back(window);
     }
 
-    bool WindowManager::onInput(InputEvent &inputEvent) {
-        if (inputEvent.getType() == InputEventType::KEY) {
-            const auto &keyInputEvent = dynamic_cast<InputEventKey &>(inputEvent);
+    bool WindowManager::onInput(const InputEvent &inputEvent) {
+        if (inputEvent.type == InputEventType::KEY) {
+            const auto &keyInputEvent = std::any_cast<InputEventKey>(inputEvent.data);
             if ((focusedWindow != nullptr) && (focusedWindow->isVisible())) {
-                if (keyInputEvent.isPressed()) {
-                    return focusedWindow->eventKeyDown(keyInputEvent.getKey());
+                if (keyInputEvent.pressed) {
+                    return focusedWindow->eventKeyDown(keyInputEvent.key);
                 } else {
-                    return focusedWindow->eventKeyUp(keyInputEvent.getKey());
+                    return focusedWindow->eventKeyUp(keyInputEvent.key);
                 }
             }
-        } else if ((inputEvent.getType() == InputEventType::MOUSE_BUTTON)
-                || (inputEvent.getType() == InputEventType::MOUSE_MOTION)) {
-#ifdef _WIN32
-            CURSORINFO ci {
-                .cbSize = sizeof(CURSORINFO)
-            };
-            if (GetCursorInfo(&ci)) {
-                // Mouse cursor is hidden
-                if (ci.flags == 0) {
-                    return false;
-                }
+        } else if ((inputEvent.type == InputEventType::MOUSE_BUTTON)
+                || (inputEvent.type == InputEventType::MOUSE_MOTION)) {
+            if (renderingWindow.isMouseHidden()) {
+                return false;
             }
-#endif
-            auto &mouseEvent = dynamic_cast<InputEventMouse&>(inputEvent);
-            const auto scaleX = VECTOR_SCREEN_SIZE / renderingWindow.getExtent().width;
-            const auto scaleY = VECTOR_SCREEN_SIZE / renderingWindow.getExtent().height;
-            const auto x = mouseEvent.getX() * scaleX;
-            const auto y = mouseEvent.getY() * scaleY;
+            const auto scaleX = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRect().width;
+            const auto scaleY = VECTOR_2D_SCREEN_SIZE / renderingWindow.getRect().height;
 
-            if (inputEvent.getType() == InputEventType::MOUSE_MOTION) {
+            if (inputEvent.type == InputEventType::MOUSE_MOTION) {
+                auto mouseEvent = std::any_cast<InputEventMouseMotion>(inputEvent.data);
+                const auto x = mouseEvent.position.x * scaleX;
+                const auto y = mouseEvent.position.y * scaleY;
                 const auto resizeDeltaY = scaleY * resizeDelta;
                 if (resizedWindow != nullptr) {
                     if (resizingWindow) {
@@ -191,19 +172,21 @@ namespace lysa::ui {
                             renderingWindow.setMouseCursor(currentCursor);
                             return true;
                         }
-                        consumed |= window->eventMouseMove(mouseEvent.getButtonsState(), lx, ly);
+                        consumed |= window->eventMouseMove(mouseEvent.buttonsState, lx, ly);
                     }
                     if (consumed) { return true; }
                 }
             } else {
-                const auto &mouseInputEvent = dynamic_cast<InputEventMouseButton&>(mouseEvent);
+                auto mouseInputEvent = std::any_cast<InputEventMouseButton>(inputEvent.data);
+                const auto x = mouseInputEvent.position.x * scaleX;
+                const auto y = mouseInputEvent.position.y * scaleY;
                 if (resizedWindow != nullptr) {
                     if ((!resizingWindow) &&
-                        (mouseInputEvent.getMouseButton() == MouseButton::LEFT) &&
-                        (mouseInputEvent.isPressed())) {
+                        (mouseInputEvent.button== MouseButton::LEFT) &&
+                        (mouseInputEvent.pressed)) {
                         resizingWindow = true;
-                        } else if ((mouseInputEvent.getMouseButton() == MouseButton::LEFT) &&
-                                   (!mouseInputEvent.isPressed())) {
+                        } else if ((mouseInputEvent.button == MouseButton::LEFT) &&
+                                   (!mouseInputEvent.pressed)) {
                             currentCursor = MouseCursor::ARROW;
                             resizedWindow = nullptr;
                             resizingWindow = false;
@@ -215,12 +198,12 @@ namespace lysa::ui {
                     auto consumed = false;
                     const auto lx = std::ceil(x - window->getRect().x);
                     const auto ly = std::ceil(y - window->getRect().y);
-                    if (mouseInputEvent.isPressed()) {
+                    if (mouseInputEvent.pressed) {
                         if (window->getRect().contains(x, y)) {
-                            consumed |= window->eventMouseDown(mouseInputEvent.getMouseButton(), lx, ly);
+                            consumed |= window->eventMouseDown(mouseInputEvent.button, lx, ly);
                         }
                     } else {
-                        consumed |= window->eventMouseUp(mouseInputEvent.getMouseButton(), lx, ly);
+                        consumed |= window->eventMouseUp(mouseInputEvent.button, lx, ly);
                     }
                     if (consumed) { return true; }
                 }

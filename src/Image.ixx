@@ -18,7 +18,9 @@ export namespace lysa::ui {
      */
     class Image : public Widget {
     public:
-        Image(const std::shared_ptr<lysa::Image>& image = nullptr, bool autoSize = true);
+        Image(const lysa::Image& image, bool autoSize = true);
+
+        Image(bool autoSize = true);
 
         void setAutoSize(bool autoSize);
 
@@ -26,7 +28,7 @@ export namespace lysa::ui {
 
         auto getColor() const { return color; }
 
-        void setImage(const std::shared_ptr<lysa::Image>& image);
+        void setImage(const lysa::Image& image);
 
         void _setSize(float width, float height) override;
 
@@ -35,7 +37,7 @@ export namespace lysa::ui {
     private:
         float4 color{1.0f};
         bool autoSize;
-        std::shared_ptr<lysa::Image> image;
+        const lysa::Image* image{nullptr};
 
         void autoResize();
 

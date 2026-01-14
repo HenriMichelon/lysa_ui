@@ -14,7 +14,7 @@ import lysa.ui.event;
 import lysa.ui.panel;
 import lysa.ui.style;
 import lysa.ui.widget;
-// import lysa.ui.window_manager;
+import lysa.ui.window_manager;
 
 namespace lysa::ui {
 
@@ -22,13 +22,13 @@ namespace lysa::ui {
         rect{rect} {
     }
 
-    // void Window::attach(WindowManager* windowManager) {
-    //     assert([&]{ return this->windowManager == nullptr;} , "ui::Window must not be already attached to a manager");
-    //     this->windowManager = windowManager;
-    //     this->fontScale = windowManager->getDefaultFontScale();
-    //     this->font = windowManager->getDefaultFont();
-    //     this->textColor = windowManager->getDefaultTextColor();
-    // }
+    void Window::attach(WindowManager* windowManager) {
+        assert([&]{ return this->windowManager == nullptr;} , "ui::Window must not be already attached to a manager");
+        this->windowManager = windowManager;
+        this->fontScale = windowManager->getDefaultFontScale();
+        this->font = windowManager->getDefaultFont();
+        this->textColor = windowManager->getDefaultTextColor();
+    }
 
     void Window::detach() {
         windowManager = nullptr;

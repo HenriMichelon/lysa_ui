@@ -88,20 +88,20 @@ set(LYSA_UI_SRC
         ${SRC_DIR}/Button.cpp
         ${SRC_DIR}/CheckWidget.cpp
         ${SRC_DIR}/Frame.cpp
-#        ${SRC_DIR}/Image.cpp
+        ${SRC_DIR}/Image.cpp
         ${SRC_DIR}/Line.cpp
         ${SRC_DIR}/ScrollBar.cpp
         ${SRC_DIR}/Style.cpp
         ${SRC_DIR}/StyleClassic.cpp
         ${SRC_DIR}/StyleClassicResource.cpp
-#        ${SRC_DIR}/Text.cpp
+        ${SRC_DIR}/Text.cpp
         ${SRC_DIR}/TextEdit.cpp
         ${SRC_DIR}/ToggleButton.cpp
         ${SRC_DIR}/TreeView.cpp
         ${SRC_DIR}/ValueSelect.cpp
         ${SRC_DIR}/Widget.cpp
         ${SRC_DIR}/Window.cpp
-#        ${SRC_DIR}/WindowManager.cpp
+        ${SRC_DIR}/WindowManager.cpp
 
 )
 set(LYSA_UI_MODULES
@@ -126,6 +126,6 @@ set(LYSA_UI_MODULES
         ${SRC_DIR}/ValueSelect.ixx
         ${SRC_DIR}/Widget.ixx
         ${SRC_DIR}/Window.ixx
-#        ${SRC_DIR}/WindowManager.ixx
+        ${SRC_DIR}/WindowManager.ixx
        )
 build_target(${PROJECT_NAME} "${LYSA_UI_SRC}" "${LYSA_UI_MODULES}")

@@ -11,10 +11,15 @@ import lysa.ui.window_manager;
 
 namespace lysa::ui {
 
-    Image::Image(const std::shared_ptr<lysa::Image> &image, const bool autoSize) :
+    Image::Image(const lysa::Image& image, const bool autoSize) :
         Widget{IMAGE},
         autoSize{autoSize} {
         setImage(image);
+    }
+
+    Image::Image(const bool autoSize) :
+        Widget{IMAGE},
+        autoSize{autoSize} {
     }
 
     void Image::_setSize(const float width, const float height) {
@@ -58,12 +63,12 @@ namespace lysa::ui {
         }
     }
 
-    void Image::setImage(const std::shared_ptr<lysa::Image> &image) {
-        if (this->image == image) {
+    void Image::setImage(const lysa::Image& image) {
+        if (this->image == &image) {
             return;
         }
-        this->image = image;
-        if (image) {
+        this->image = &image;
+        if (this->image) {
             if (autoSize) {
                 autoResize();
             } else {
