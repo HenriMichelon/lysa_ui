@@ -23,10 +23,10 @@ namespace lysa::ui {
         defaultFont = std::make_shared<Font>(ctx, defaultFontURI);
         renderingWindow.getRenderTarget().addRenderer(renderer);
         ctx.events.subscribe(MainLoopEvent::PROCESS, [this](const Event&) {
-           drawFrame();
+            drawFrame();
         });
-        ctx.events.subscribe(RenderingWindowEvent::INPUT, renderingWindow.id, [this](const Event& evt) {
-           onInput(std::any_cast<InputEvent>(evt.payload));
+        ctx.events.subscribe(RenderingWindowEvent::INPUT, renderingWindow.id, [this](Event& evt) {
+            evt.consumed = onInput(std::any_cast<InputEvent>(evt.payload));
         });
     }
 
@@ -190,13 +190,13 @@ namespace lysa::ui {
                     if ((!resizingWindow) &&
                         (mouseInputEvent.button== MouseButton::LEFT) &&
                         (mouseInputEvent.pressed)) {
-                        resizingWindow = true;
+                            resizingWindow = true;
                         } else if ((mouseInputEvent.button == MouseButton::LEFT) &&
                                    (!mouseInputEvent.pressed)) {
                             currentCursor = MouseCursor::ARROW;
                             resizedWindow = nullptr;
                             resizingWindow = false;
-                                   }
+                        }
                     renderingWindow.setMouseCursor(currentCursor);
                     return true;
                 }
@@ -206,7 +206,8 @@ namespace lysa::ui {
                     const auto ly = std::ceil(y - window->getRect().y);
                     if (mouseInputEvent.pressed) {
                         if (window->getRect().contains(x, y)) {
-                            consumed |= window->eventMouseDown(mouseInputEvent.button, lx, ly);
+                            window->eventMouseDown(mouseInputEvent.button, lx, ly);
+                            consumed = true;
                         }
                     } else {
                         consumed |= window->eventMouseUp(mouseInputEvent.button, lx, ly);

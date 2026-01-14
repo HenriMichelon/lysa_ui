@@ -71,7 +71,7 @@ export namespace lysa::ui {
      * Parameter for Event::OnClick
      */
     struct EventClick : UIEvent {
-        //! set this to true if the event have been consumed and will not be passed to widgets & nodes below
+        //! set this to true if the event have been consumed and will not be passed to widgets below
         bool consumed{false};
     };
 
