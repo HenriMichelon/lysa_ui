@@ -67,6 +67,13 @@ export namespace lysa::ui {
         */
         void setWidget(std::shared_ptr<Widget> child = nullptr, const std::string& resources = "", float padding = 0);
 
+        /** Creates & adds a child widget.
+       */
+        template<typename T, typename... Args>
+        std::shared_ptr<T> create(Args&&... args) {
+            return add(std::make_shared<T>(ctx, std::forward<Args>(args)...));
+        }
+
         /** Adds a child widget. Children widgets will be destroyed on parent destruction.
               \param child	    : child widget to add
               \param alignment  : placement
@@ -74,7 +81,7 @@ export namespace lysa::ui {
               \param overlap    : overlap widget on top of other widgets
        */
         template<typename T>
-        auto add(
+        std::shared_ptr<Widget> add(
             const std::shared_ptr<T> &child,
             const Widget::AlignmentType alignment,
             const std::string & resource = "",

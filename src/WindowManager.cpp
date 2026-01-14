@@ -7,21 +7,20 @@
 module;
 module lysa.ui.window_manager;
 
-import lysa.rect;
-
 namespace lysa::ui {
 
     WindowManager::WindowManager(
         RenderingWindow& renderingWindow,
-        Vector2DRenderer& renderer,
         const std::string& defaultFontName,
         const float defaultFontScale,
         const float4& defaultTextColor):
-        renderer{renderer},
+        ctx{renderingWindow.getRenderTarget().getContext()},
         renderingWindow{renderingWindow},
+        renderer{ctx,renderingWindow.getRenderTarget().getRendererConfiguration()},
         fontScale{defaultFontScale},
         textColor{defaultTextColor} {
-        defaultFont = std::make_shared<Font>(renderingWindow.getContext(), defaultFontName);
+        defaultFont = std::make_shared<Font>(ctx,defaultFontName);
+        renderingWindow.getRenderTarget().addRenderer(renderer);
     }
 
     WindowManager::~WindowManager() {

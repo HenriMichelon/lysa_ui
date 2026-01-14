@@ -84,7 +84,6 @@ endif ()
 
 #######################################################
 set(LYSA_UI_SRC
-        ${SRC_DIR}/UI.cpp
         ${SRC_DIR}/Button.cpp
         ${SRC_DIR}/CheckWidget.cpp
         ${SRC_DIR}/Frame.cpp
