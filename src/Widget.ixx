@@ -22,7 +22,7 @@ namespace lysa::ui {
     /**
      * Base class for all UI widgets
      */
-    export class Widget : public UniqueResource  {
+    export class Widget : public UniqueResource, public std::enable_shared_from_this<Widget>  {
     public:
         //! Widget type
         enum Type {
@@ -239,7 +239,7 @@ namespace lysa::ui {
 
         void _draw(Vector2DRenderer &) const;
 
-        Widget* setFocus(bool = true);
+        std::shared_ptr<Widget> setFocus(bool = true);
 
         virtual void eventCreate();
 
@@ -273,6 +273,8 @@ namespace lysa::ui {
 
         virtual void _setSize(float width, float height);
 
+        void _allowFocus(bool allow = true);
+
     protected:
         friend class Window;
         Context& ctx;
@@ -300,8 +302,6 @@ namespace lysa::ui {
         bool mouseMoveOnFocus{false};
         float fontScale{0.0f};
 
-        void allowingFocus(bool allow = true);
-
         virtual Rect _getDefaultRect() { return defaultRect; }
 
         virtual void _init(Widget &child, Alignment alignment, const std::string &res, bool overlap);
@@ -317,6 +317,6 @@ namespace lysa::ui {
         Rect childrenRect;
         std::shared_ptr<Font> font{nullptr};
 
-        Widget *setNextFocus();
+        std::shared_ptr<Widget> setNextFocus();
     };
 }

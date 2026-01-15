@@ -386,10 +386,7 @@ namespace lysa::ui {
         }
     }
 
-
     /*
-
-
     //----------------------------------------------
         void GLayoutVector::DrawArrow(GArrow&W, GLayoutVectorResource&, Vector2DRenderer&, float)
         {

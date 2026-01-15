@@ -294,7 +294,7 @@ export namespace lysa::ui {
         float maxHeight{VECTOR_2D_SCREEN_SIZE};
         std::shared_ptr<Style> layout{nullptr};
         std::shared_ptr<Widget> widget{nullptr};
-        Widget* focusedWidget{nullptr};
+        std::shared_ptr<Widget> focusedWidget{nullptr};
         float transparency{1.0};
         float4 textColor{0.0f, 0.0f, 0.0f, 1.0f};
         uint32 resizeableBorders{RESIZEABLE_NONE};

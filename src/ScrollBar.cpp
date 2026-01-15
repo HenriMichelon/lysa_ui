@@ -20,6 +20,7 @@ namespace lysa::ui {
         const float step):
         ValueSelect{ctx, SCROLLBAR, min, max, value, step},
         type{type} {
+        allowFocus = true;
     }
 
     void ScrollBar::setResources(const std::string& area, const std::string& cage) {

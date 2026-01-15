@@ -86,7 +86,7 @@ namespace lysa::ui {
         widget->eventCreate();
         widget->setPos(0, 0);
         widget->_setSize(getWidth(), getHeight());
-        focusedWidget = widget->setFocus();
+        // focusedWidget = widget->setFocus();
         unFreeze(widget);
     }
 
@@ -229,7 +229,10 @@ namespace lysa::ui {
     }
 
     void Window::setFocusedWidget(const std::shared_ptr<Widget> &W) {
-        focusedWidget = W.get();
+        if (focusedWidget) {
+            focusedWidget->setFocus(false);
+        }
+        focusedWidget = W;
     }
 
     Widget &Window::getWidget() const {

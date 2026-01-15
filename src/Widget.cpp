@@ -96,13 +96,14 @@ namespace lysa::ui {
         refresh();
     }
 
-    Widget *Widget::setNextFocus() {
+    std::shared_ptr<Widget> Widget::setNextFocus() {
         if (focused) {
             setFocus(false);
         } else {
-            Widget *r = setFocus();
-            if (r)
+            auto r = setFocus();
+            if (r) {
                 return r;
+            }
         }
 
         if (!parent)
@@ -124,10 +125,10 @@ namespace lysa::ui {
         return nullptr;
     }
 
-    Widget *Widget::setFocus(const bool F) {
-        if (!enabled)
+    std::shared_ptr<Widget> Widget::setFocus(const bool F) {
+        if (!enabled) {
             return nullptr;
-
+        }
         if (F && (!allowFocus)) {
             for (const auto &child : children) {
                 const auto w = child->setFocus(F);
@@ -144,6 +145,7 @@ namespace lysa::ui {
                 if (!freeze) {
                     refresh();
                 }
+                window->setFocusedWidget(shared_from_this());
                 ctx.events.push({UIEvent::OnGotFocus, {}, id});
             } else {
                 ctx.events.push({UIEvent::OnLostFocus, {}, id});
@@ -152,13 +154,13 @@ namespace lysa::ui {
                 if (p) { p->Refresh(rect); }*/
             }
         }
-        return this;
+        return shared_from_this();
     }
 
-    void Widget::allowingFocus(const bool allow) {
+    void Widget::_allowFocus(const bool allow) {
         allowFocus = allow;
         for (const auto &child : children) {
-            child->allowingFocus(false);
+            child->_allowFocus(allow);
         }
     }
 
