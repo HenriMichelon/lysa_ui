@@ -74,13 +74,25 @@ export namespace lysa::ui {
          */
         template<typename T, typename... Args>
         std::shared_ptr<T> create(
-            const Alignment alignment,
             const std::string & resource ,
+            const Alignment alignment,
             Args&&... args) {
             return add(
                 std::make_shared<T>(ctx, std::forward<Args>(args)...),
                 alignment,
                 resource);
+        }
+
+        /*
+        * Creates & adds a child widget.
+        */
+        template<typename T, typename... Args>
+        std::shared_ptr<T> create(
+            const Alignment alignment,
+            Args&&... args) {
+            return add(
+                std::make_shared<T>(ctx, std::forward<Args>(args)...),
+                alignment);
         }
 
         /** Adds a child widget. Children widgets will be destroyed on parent destruction.
@@ -257,7 +269,7 @@ export namespace lysa::ui {
 
         bool eventMouseUp(MouseButton, float, float);
 
-        void eventMouseMove(uint32, float, float);
+        bool eventMouseMove(uint32, float, float);
 
         void eventGotFocus();
 

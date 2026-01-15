@@ -53,9 +53,9 @@ export namespace lysa::ui {
 
         void eventValueChange(float prev) override;
 
-        void onLiftAreaDown(const UIEventMouseButton* event) ;
+        void onLiftAreaDown(const UIEventMouseButton& event) ;
 
-        void onLiftCageDown(const UIEventMouseButton* event);
+        void onLiftCageDown(const UIEventMouseButton& event);
 
         void liftRefresh(const Rect& rect) const;
     };

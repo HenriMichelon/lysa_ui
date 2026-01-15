@@ -116,6 +116,19 @@ namespace lysa::ui {
         /** Returns the parent widget, or nullptr */
         Widget* getParent() const { return parent; }
 
+        /*
+         * Creates & adds a child widget.
+         */
+        template<typename T, typename... Args>
+        std::shared_ptr<T> create(
+            const std::string & resource,
+            const Alignment alignment,
+            Args&&... args) {
+            return add(
+                std::make_shared<T>(ctx, std::forward<Args>(args)...),
+                alignment,
+                resource);
+        }
 
         /*
          * Creates & adds a child widget.
@@ -123,12 +136,10 @@ namespace lysa::ui {
         template<typename T, typename... Args>
         std::shared_ptr<T> create(
             const Alignment alignment,
-            const std::string & resource ,
             Args&&... args) {
             return add(
                 std::make_shared<T>(ctx, std::forward<Args>(args)...),
-                alignment,
-                resource);
+                alignment);
         }
 
         /** Adds a child widget.

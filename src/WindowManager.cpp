@@ -178,9 +178,9 @@ namespace lysa::ui {
                             renderingWindow.setMouseCursor(currentCursor);
                             return true;
                         }
-                        // consumed |= window->eventMouseMove(mouseEvent.buttonsState, lx, ly);
+                        consumed |= window->eventMouseMove(mouseEvent.buttonsState, lx, ly);
                     }
-                    // if (consumed) { return true; }
+                    if (consumed) { return true; }
                 }
             } else {
                 auto mouseInputEvent = std::get<InputEventMouseButton>(inputEvent.data);

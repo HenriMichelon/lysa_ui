@@ -56,6 +56,8 @@ export namespace lysa::ui {
 
         auto getDefaultTextColor() const { return textColor; }
 
+        float getAspectRatio() const { return renderingWindow.getRenderTarget().getAspectRatio(); }
+
         /**
          * Forces a redrawing of all the UI at the start of the next frame
          */

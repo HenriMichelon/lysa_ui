@@ -14,9 +14,9 @@ namespace lysa::ui {
 
     void StyleClassic::updateOptions() {
         focus = extractColor("color_focus", 0.1f, 0.1f, 0.1f);
-        fgUp = extractColor("color_foreground_up", 0.45,0.63,0.76, 0.5f);
-        fgDown = extractColor("color_foreground_down", 0.55f, 0.76f, 0.76f, 0.5f);
-        shadowDark = extractColor("color_shadow_dark", 0.0f,0.0f,0.0f, 1.0f);
+        fgUp = extractColor("color_foreground_up", 0.4,0.6,0.7, 1.0f);
+        fgDown = extractColor("color_foreground_down", 0.65f, 0.86f, 0.86f, 1.0f);
+        shadowDark = extractColor("color_shadow_dark", 0.25f,0.25f,0.25f, 1.0f);
         shadowBright = extractColor("color_shadow_bright", 0.9f,0.9f,0.9f, 1.0f);
         /*XXXX
         if (texture != nullptr) { delete texture; }

@@ -18,10 +18,10 @@ export namespace lysa::ui {
     public:
         //! State of the widget. Change on user action.
         enum State {
-            //! Checked (aka ON)
-            CHECK,
             //! Unchecked (aka OFF)
-            UNCHECK
+            UNCHECK = 0,
+            //! Checked (aka ON)
+            CHECK = 1,
         };
 
         //! Return the current state of the widget

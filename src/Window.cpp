@@ -7,6 +7,7 @@
 module lysa.ui.window;
 
 import lysa.exception;
+import lysa.log;
 import lysa.rect;
 import lysa.renderers.vector_2d;
 import lysa.resources.font;
@@ -204,25 +205,23 @@ namespace lysa::ui {
         return consumed;
     }
 
-    void Window::eventMouseMove(const uint32 B, const float X, const float Y) {
-        // if (!visible) { return false; }
-        // bool consumed = false;
-        // if ((focusedWidget != nullptr) &&
-        //     (focusedWidget->mouseMoveOnFocus)) {
-        //     consumed = focusedWidget->eventMouseMove(B, X, Y);
-        //     } else if (widget) {
-        //         consumed = widget->eventMouseMove(B, X, Y);
-        //     }
-        // if (!consumed) {
-        //     consumed |= onMouseMove(B, X, Y);
-        // }
-        // if (!consumed) {
-        //     auto event = UIEventMouseMove{.buttonsState = B, .x = X, .y = Y};
-        //     // emit(UIEvent::OnMouseMove, &event);
-        //     // consumed = event.consumed;
-        // }
-        // if (consumed) { refresh(); }
-        // return consumed;
+    bool Window::eventMouseMove(const uint32 B, const float X, const float Y) {
+        if (!visible) { return false; }
+        bool consumed = false;
+        if ((focusedWidget != nullptr) &&
+            (focusedWidget->mouseMoveOnFocus)) {
+            consumed = focusedWidget->eventMouseMove(B, X, Y);
+        } else if (widget) {
+            consumed = widget->eventMouseMove(B, X, Y);
+        }
+        if (!consumed) {
+            consumed |= onMouseMove(B, X, Y);
+        }
+        if (!consumed) {
+            ctx.events.push({UIEvent::OnMouseMove, UIEventMouseMove{.buttonsState = B, .x = X, .y = Y}, id});
+        }
+        if (consumed) { refresh(); }
+        return consumed;
     }
 
     void Window::refresh() const {
