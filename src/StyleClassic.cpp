@@ -94,10 +94,10 @@ namespace lysa::ui {
             }
         } else {
             switch (widget.getType()) {
-                /*case Widget::TEXTEDIT:
-                    DrawTextEdit((GTextEdit&)W, D, res, R);
+                case Widget::TEXTEDIT:
+                    drawTextEdit((TextEdit&)widget, renderer);
                     break;
-                case Widget::PROGRESSBAR:
+                /*case Widget::PROGRESSBAR:
                     DrawProgressBar((GProgressBar&)W, D, res, R);
                     break;
                 case Widget::TABS:
@@ -120,6 +120,10 @@ namespace lysa::ui {
         case Widget::TREEVIEW:
             static_cast<TreeView &>(widget).setResources(",,LOWERED", "18,18,RAISED", "");
             break;
+        case Widget::TEXTEDIT:
+            static_cast<TextEdit&>(widget).setResources(resources);
+            break;
+
             // XXX
             /*case Widget::UPDOWN:
                 ((GUpDown&)W).SetResources(RES, RES);
@@ -139,9 +143,6 @@ namespace lysa::ui {
                 ((GScrollBox&)W).SetResources(std::string(",,LOWERED") + (res->flat ? ",FLAT" : ""),
                                               std::string("18,18,RAISED") + (res->flat ? ",FLAT" : ""),
                                               std::string("18,18,RAISED") + (res->flat ? ",FLAT" : ""));
-                break;
-            case Widget::TEXTEDIT:
-                ((GTextEdit&)W).SetResources(RES);
                 break;
             case Widget::TABS:
                 ((GTabs&)W).SetResources(",,RAISED");
@@ -367,6 +368,22 @@ namespace lysa::ui {
         renderer.drawLine({l, b}, {l + w, b}); // bottom
     }
 
+    void StyleClassic::drawTextEdit(const TextEdit& widget, Vector2DRenderer& renderer) const {
+        if (widget.isFocused() && (!widget.isReadOnly())) {
+            float w, h;
+            const auto txt = widget.getDisplayedText().substr(
+                0,
+                widget.getSelStart() - widget.getFirstDisplayedChar());
+            widget.getFont()->getSize(txt, widget.getFontScale(), w, h);
+            auto l = widget.getRect().x + 2 + w;
+            auto t =  widget.getRect().y - 2;
+            renderer.setPenColor(shadowDark);
+            renderer.drawLine({l - 2, t}, {l - 2 + 5, t});
+            renderer.drawLine({l - 2, t - h}, {l - 2 + 5, t - h});
+            renderer.drawLine({l, t}, {l, t - h});
+        }
+    }
+
 
     /*
 
@@ -451,24 +468,6 @@ namespace lysa::ui {
             }
 
         }
-
-    //----------------------------------------------
-        void GLayoutVector::DrawTextEdit(GTextEdit&W, GLayoutVectorResource&, Vector2DRenderer&, floatRESR)
-        {
-            if (W.HaveFocus() && (!W.ReadOnly())) {
-                Ustd::stringz txt = W.DisplayedText().Left(W.SelStart() -
-                                                      W.FirstDisplayedChar());
-                uint32_t l = W.Left() + 2 + W.Font().Width(txt);
-                uint32_t t = W.Top() + 2;
-                uint32_t h = W.Font().Height();
-                D.SetPenColor(shadowDark);
-                D.DrawHLine(l - 2, t, 5);
-                D.DrawHLine(l - 2, t + h, 5);
-                D.DrawLine(l, t, l, t + h);
-            }
-        }
-
-
 
     //----------------------------------------------
         void GLayoutVector::DrawProgressBar(GProgressBar&W, GLayoutVectorResource&, Vector2DRenderer&, float)

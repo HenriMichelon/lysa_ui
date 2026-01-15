@@ -12,7 +12,19 @@ namespace lysa::ui {
 
     TextEdit::TextEdit(Context& ctx, const std::string& text):
         Widget{ctx, TEXTEDIT},
-        text{text} {
+        text(text)  {
+    }
+
+    void TextEdit::computeNDispChar() {
+        uint32 i;
+        auto s = box->getWidth() - box->getHBorder()*2;
+        for (i = startPos; (i < text.size()) && (s > 0); i++) {
+            const auto gi = getFont()->getGlyphInfo(text[i]);
+            const auto width = gi.planeBounds.right - gi.planeBounds.left;
+            if (s <width) { break; }
+            s -= width;
+        }
+        nDispChar = i-startPos;
     }
 
     void TextEdit::setText(const std::string& TEXT) {
@@ -38,8 +50,10 @@ namespace lysa::ui {
     }
 
     void TextEdit::setResources(const std::string& resource) {
-        add(box, Alignment::FILL, resource);
-        box->add(textBox, Alignment::HCENTER);
+        if (box == nullptr) {
+            box = create<Box>(resource, Alignment::FILL);
+            textBox = box->create<Text>(Alignment::HCENTER, text);
+        }
         selStart = 0;
         startPos = 0;
         computeNDispChar();

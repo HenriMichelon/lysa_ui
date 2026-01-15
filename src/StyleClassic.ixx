@@ -19,6 +19,7 @@ import lysa.ui.scroll_bar;
 import lysa.ui.style;
 import lysa.ui.style_classic_resource;
 import lysa.ui.text;
+import lysa.ui.text_edit;
 import lysa.ui.toggle_button;
 import lysa.ui.tree_view;
 import lysa.ui.widget;
@@ -64,9 +65,10 @@ export namespace lysa::ui {
 
         void drawFrame(Frame &, StyleClassicResource &, Vector2DRenderer &) const;
 
+        void drawTextEdit(const TextEdit&, Vector2DRenderer&) const;
+
         /*void drawArrow(GArrow&, GLayoutVectorResource&, VectorRenderer&);
         void drawCheckmark(GCheckmark&, GLayoutVectorResource&, VectorRenderer&);
-        void drawTextEdit(GTextEdit&, GLayoutVectorResource&, VectorRenderer&);
         void drawProgressBar(GProgressBar&, GLayoutVectorResource&, VectorRenderer&);
         void drawSelection(GSelection&, GLayoutVectorResource&, VectorRenderer&);
         void drawTrackBar(GTrackBar&, GLayoutVectorResource&, VectorRenderer&);

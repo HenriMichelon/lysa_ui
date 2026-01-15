@@ -24,11 +24,9 @@ namespace lysa::ui {
 
     void ScrollBar::setResources(const std::string& area, const std::string& cage) {
         if (liftArea == nullptr) {
-            liftArea = std::make_shared<Box>(ctx);
-            liftCage = std::make_shared<Box>(ctx);
             mouseMoveOnFocus = true;
-            add(liftArea, Alignment::FILL, area);
-            add(liftCage, Alignment::NONE, cage);
+            liftArea = create<Box>(area, Alignment::FILL);
+            liftCage = create<Box>(cage, Alignment::NONE);
             ctx.events.subscribe(UIEvent::OnMouseDown, liftArea->id, [this](auto evt) {
                 this->onLiftAreaDown(std::any_cast<UIEventMouseButton>(evt.payload));
             });

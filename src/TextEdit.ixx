@@ -40,7 +40,7 @@ export namespace lysa::ui {
 
         auto getDisplayedText() const { return textBox->getText(); }
 
-        void setResources(const std::string& BRES);
+        void setResources(const std::string& resource);
 
     protected:
         std::string text;
@@ -55,8 +55,6 @@ export namespace lysa::ui {
         bool eventKeyDown(Key key) override;
 
         // Compute the number of displayed characters
-        void computeNDispChar() const {
-            throw Exception("not implemented");
-        }
+        void computeNDispChar();
     };
 }
