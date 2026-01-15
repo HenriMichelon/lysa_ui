@@ -6,6 +6,8 @@
 */
 module lysa.ui.text_edit;
 
+import lysa.input;
+import lysa.log;
 import lysa.ui.alignment;
 
 namespace lysa::ui {
@@ -89,26 +91,24 @@ namespace lysa::ui {
                 setText(text.substr(0, selStart) + text.substr(selStart + 1,
                                                                text.length() - selStart - 1));
             }
-        }
-        /*else if ((K != keyb->Key::SHIFTRIGHT) &&
-                (K != keyb->Key::SHIFTLEFT) &&
-                (K != keyb->Key::CTRLRIGHT) &&
-                (K != keyb->Key::CTRLLEFT) &&
-                (K != keyb->Key::ALTRIGHT) &&
-                (K != keyb->Key::ALTLEFT))
-        {
-            UChar c = keyb->CodeToChar(K);
-            if (c >= _WORD(0x0020)) {
-                SetText(text.Left(selStart) + c +
-                        text.Right(text.Len() - selStart));
+        } else if ((key != KEY_RIGHT_SHIFT) &&
+                (key != KEY_LEFT_SHIFT) &&
+                (key != KEY_RIGHT_CONTROL) &&
+                (key != KEY_LEFT_CONTROL) &&
+                (key != KEY_RIGHT_ALT) &&
+                (key != KEY_LEFT_ALT)) {
+            const auto c = Input::keyToChar(key);
+            if (!c.empty()) {
+                setText(text.substr(0, selStart) + c +
+                        text.substr(selStart, text.size() - selStart));
+                ctx.events.push({UIEvent::OnTextChange, UIEventTextChange{.text = text}, id});
                 selStart++;
             }
             else {
-                Freeze() = FALSE;
-                return K;
+                setFreezed(false);
+                return true;
             }
-        }*/
-        else {
+        } else {
             setFreezed(false);
             return consumed;
         }
@@ -125,6 +125,6 @@ namespace lysa::ui {
         textBox->setText(text.substr(startPos, nDispChar + 1));
         box->refresh();
         refresh();
-        return key;
+        return true;
     }
 }

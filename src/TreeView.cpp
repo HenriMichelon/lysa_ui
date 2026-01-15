@@ -11,6 +11,7 @@ import lysa.ui.alignment;
 namespace lysa::ui {
 
     TreeView::TreeView(Context& ctx) : Widget(ctx, TREEVIEW), innerHeight(0), itemsHeight(0) {
+        allowFocus = true;
     }
 
     void TreeView::setResources(const std::string& resBox, const std::string& resScroll, const std::string&) {
