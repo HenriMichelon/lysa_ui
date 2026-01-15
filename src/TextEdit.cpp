@@ -20,11 +20,10 @@ namespace lysa::ui {
 
     void TextEdit::computeNDispChar() {
         uint32 i;
-        auto s = box->getWidth() - box->getHBorder()*2;
+        auto s = box->getWidth() - box->getHBorder() * 2 - box->getPadding() * 2;
         for (i = startPos; (i < text.size()) && (s > 0); i++) {
-            const auto gi = getFont()->getGlyphInfo(text[i]);
-            const auto width = gi.planeBounds.right - gi.planeBounds.left;
-            if (s <width) { break; }
+            const auto width = getFont()->getWidth(text[i], textBox->getFontScale());
+            if (s < width) { break; }
             s -= width;
         }
         nDispChar = i-startPos;
@@ -119,7 +118,7 @@ namespace lysa::ui {
         else if (((selStart + selLen) > (startPos + nDispChar)) &&
             (nDispChar != text.length())) {
             startPos = selStart - nDispChar;
-            }
+        }
         computeNDispChar();
         setFreezed(false);
         textBox->setText(text.substr(startPos, nDispChar + 1));
