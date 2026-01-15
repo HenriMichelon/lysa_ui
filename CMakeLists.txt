@@ -109,12 +109,10 @@ set(LYSA_UI_MODULES
         ${SRC_DIR}/Box.ixx
         ${SRC_DIR}/Button.ixx
         ${SRC_DIR}/CheckWidget.ixx
-        ${SRC_DIR}/Event.ixx
         ${SRC_DIR}/Frame.ixx
         ${SRC_DIR}/Image.ixx
         ${SRC_DIR}/Line.ixx
         ${SRC_DIR}/Panel.ixx
-        ${SRC_DIR}/UIResource.ixx
         ${SRC_DIR}/ScrollBar.ixx
         ${SRC_DIR}/Style.ixx
         ${SRC_DIR}/StyleClassic.ixx
@@ -123,6 +121,8 @@ set(LYSA_UI_MODULES
         ${SRC_DIR}/TextEdit.ixx
         ${SRC_DIR}/ToggleButton.ixx
         ${SRC_DIR}/TreeView.ixx
+        ${SRC_DIR}/UIEvent.ixx
+        ${SRC_DIR}/UIResource.ixx
         ${SRC_DIR}/ValueSelect.ixx
         ${SRC_DIR}/Widget.ixx
         ${SRC_DIR}/Window.ixx

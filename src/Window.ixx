@@ -11,6 +11,7 @@ import lysa.input_event;
 import lysa.math;
 import lysa.rect;
 import lysa.renderers.vector_2d;
+import lysa.resources;
 import lysa.resources.font;
 import lysa.ui.alignment;
 import lysa.ui.style;
@@ -21,7 +22,7 @@ export namespace lysa::ui {
     /**
      * %A virtual UI Window displayed inside the rendering Window. All UI widgets must belong to a UI window.
      */
-    class Window  {
+    class Window : public UniqueResource {
     public:
         /**
          * Which Window borders can be used to resize the Window
@@ -256,7 +257,7 @@ export namespace lysa::ui {
 
         bool eventMouseUp(MouseButton, float, float);
 
-        bool eventMouseMove(uint32, float, float);
+        void eventMouseMove(uint32, float, float);
 
         void eventGotFocus();
 

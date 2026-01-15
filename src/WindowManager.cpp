@@ -100,9 +100,9 @@ namespace lysa::ui {
             const auto &keyInputEvent = std::get<InputEventKey>(inputEvent.data);
             if ((focusedWindow != nullptr) && (focusedWindow->isVisible())) {
                 if (keyInputEvent.pressed) {
-                    return focusedWindow->eventKeyDown(keyInputEvent.key);
+                    // return focusedWindow->eventKeyDown(keyInputEvent.key);
                 } else {
-                    return focusedWindow->eventKeyUp(keyInputEvent.key);
+                    // return focusedWindow->eventKeyUp(keyInputEvent.key);
                 }
             }
         } else if ((inputEvent.type == InputEventType::MOUSE_BUTTON)
@@ -178,9 +178,9 @@ namespace lysa::ui {
                             renderingWindow.setMouseCursor(currentCursor);
                             return true;
                         }
-                        consumed |= window->eventMouseMove(mouseEvent.buttonsState, lx, ly);
+                        // consumed |= window->eventMouseMove(mouseEvent.buttonsState, lx, ly);
                     }
-                    if (consumed) { return true; }
+                    // if (consumed) { return true; }
                 }
             } else {
                 auto mouseInputEvent = std::get<InputEventMouseButton>(inputEvent.data);

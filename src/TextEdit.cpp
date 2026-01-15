@@ -47,31 +47,31 @@ namespace lysa::ui {
         computeNDispChar();
     }
 
-    bool TextEdit::eventKeyDown(Key key) {
+    bool TextEdit::eventKeyDown(const Key key) {
         const auto consumed = Widget::eventKeyDown(key);
         if (isReadOnly()) { return key; }
 
         setFreezed(true);
-        if (key == Key::KEY_LEFT) {
+        if (key == KEY_LEFT) {
             if (selStart > 0) { selStart--; }
         }
-        else if (key == Key::KEY_RIGHT) {
+        else if (key == KEY_RIGHT) {
             if (selStart < text.length()) { selStart++; }
         }
-        else if (key == Key::KEY_END) {
+        else if (key == KEY_END) {
             selStart = text.length();
         }
-        else if (key == Key::KEY_HOME) {
+        else if (key == KEY_HOME) {
             selStart = 0;
         }
-        else if (key == Key::KEY_BACKSPACE) {
+        else if (key == KEY_BACKSPACE) {
             if (selStart > 0) {
                 selStart--;
                 setText(text.substr(0, selStart) + text.substr(selStart + 1,
                                                                text.length() - selStart - 1));
             }
         }
-        else if (key == Key::KEY_DELETE) {
+        else if (key == KEY_DELETE) {
             if (selStart < text.length()) {
                 setText(text.substr(0, selStart) + text.substr(selStart + 1,
                                                                text.length() - selStart - 1));

@@ -23,6 +23,8 @@ namespace lysa::ui {
     bool CheckWidget::eventMouseDown(const MouseButton button, const float x, const float y) {
         if (getRect().contains(x, y)) {
             setState(state == CHECK ? UNCHECK : CHECK);
+            Widget::eventMouseDown(button, x, y);
+            return true;
         }
         return Widget::eventMouseDown(button, x, y);
     }

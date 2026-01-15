@@ -55,7 +55,7 @@ export namespace lysa::ui {
         bool eventKeyDown(Key key) override;
 
         // Compute the number of displayed characters
-        void computeNDispChar() {
+        void computeNDispChar() const {
             throw Exception("not implemented");
         }
     };

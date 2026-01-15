@@ -141,15 +141,15 @@ namespace lysa::ui {
     bool Window::eventKeyDown(const Key K) {
         bool consumed = false;
         if (focusedWidget) {
-            consumed = focusedWidget->eventKeyDown(K); // XXX consumed
+            focusedWidget->eventKeyDown(K);
+            consumed = true;
         }
         if (!consumed) {
             consumed |= onKeyDown(K);
         }
         if (!consumed) {
             auto event = UIEventKeyb{.key = K};
-            // emit(UIEvent::OnKeyDown, &event);
-            // consumed = event.consumed;
+            ctx.events.push({UIEvent::OnKeyDown, event, id});
         }
         refresh();
         return consumed;
@@ -158,15 +158,15 @@ namespace lysa::ui {
     bool Window::eventKeyUp(const Key K) {
         bool consumed = false;
         if (focusedWidget) {
-            focusedWidget->eventKeyUp(K); // XXX consumed
+            focusedWidget->eventKeyUp(K);
+            consumed = true;
         }
         if (!consumed) {
             consumed |= onKeyUp(K);
         }
         if (!consumed) {
             auto event = UIEventKeyb{.key = K};
-            // emit(UIEvent::OnKeyUp, &event);
-            // consumed = event.consumed;
+            ctx.events.push({UIEvent::OnKeyUp, event, id});
         }
         refresh();
         return consumed;
@@ -182,9 +182,7 @@ namespace lysa::ui {
             consumed |= onMouseDown(B, X, Y);
         }
         if (!consumed) {
-            auto event = UIEventMouseButton{.button = B, .x = X, .y = Y};
-            // emit(UIEvent::OnMouseDown, &event);
-            // consumed = event.consumed;
+            ctx.events.push({UIEvent::OnMouseDown, UIEventMouseButton{.button = B, .x = X, .y = Y}, id});
         }
         refresh();
         return consumed;
@@ -200,33 +198,31 @@ namespace lysa::ui {
             consumed |= onMouseUp(B, X, Y);
         }
         if (!consumed) {
-            auto event = UIEventMouseButton{.button = B, .x = X, .y = Y};
-            // emit(UIEvent::OnMouseUp, &event);
-            // consumed = event.consumed;
+            ctx.events.push({UIEvent::OnMouseUp, UIEventMouseButton{.button = B, .x = X, .y = Y}, id});
         }
         refresh();
         return consumed;
     }
 
-    bool Window::eventMouseMove(const uint32 B, const float X, const float Y) {
-        if (!visible) { return false; }
-        bool consumed = false;
-        if ((focusedWidget != nullptr) &&
-            (focusedWidget->mouseMoveOnFocus)) {
-            consumed = focusedWidget->eventMouseMove(B, X, Y);
-            } else if (widget) {
-                consumed = widget->eventMouseMove(B, X, Y);
-            }
-        if (!consumed) {
-            consumed |= onMouseMove(B, X, Y);
-        }
-        if (!consumed) {
-            auto event = UIEventMouseMove{.buttonsState = B, .x = X, .y = Y};
-            // emit(UIEvent::OnMouseMove, &event);
-            // consumed = event.consumed;
-        }
-        if (consumed) { refresh(); }
-        return consumed;
+    void Window::eventMouseMove(const uint32 B, const float X, const float Y) {
+        // if (!visible) { return false; }
+        // bool consumed = false;
+        // if ((focusedWidget != nullptr) &&
+        //     (focusedWidget->mouseMoveOnFocus)) {
+        //     consumed = focusedWidget->eventMouseMove(B, X, Y);
+        //     } else if (widget) {
+        //         consumed = widget->eventMouseMove(B, X, Y);
+        //     }
+        // if (!consumed) {
+        //     consumed |= onMouseMove(B, X, Y);
+        // }
+        // if (!consumed) {
+        //     auto event = UIEventMouseMove{.buttonsState = B, .x = X, .y = Y};
+        //     // emit(UIEvent::OnMouseMove, &event);
+        //     // consumed = event.consumed;
+        // }
+        // if (consumed) { refresh(); }
+        // return consumed;
     }
 
     void Window::refresh() const {

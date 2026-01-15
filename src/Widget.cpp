@@ -511,10 +511,9 @@ namespace lysa::ui {
         if (!enabled) {
             return false;
         }
-        auto event   = UIEventKeyb{.key = key};
-        // event.source = this;
-        // emit(UIEvent::OnKeyDown, &event);
-        // return event.consumed;
+        auto event = UIEventKeyb{.key = key};
+        event.source = this;
+        ctx.events.push({UIEvent::OnKeyDown, event, id});
         return false;
     }
 
@@ -523,10 +522,10 @@ namespace lysa::ui {
             return false;
         }
         if (focused) {
-            auto event   = UIEventKeyb{.key = key};
+            auto event= UIEventKeyb{.key = key};
             event.source = this;
-            // emit(UIEvent::OnKeyUp, &event);
-            // return event.consumed;
+            ctx.events.push({UIEvent::OnKeyUp, event, id});
+            return true;
         }
         return false;
     }
@@ -534,22 +533,16 @@ namespace lysa::ui {
     bool Widget::eventMouseDown(const MouseButton button, const float x, const float y) {
         if (!enabled) { return false;}
         pushed = true;
-        if (redrawOnMouseEvent) {
-            resizeChildren();
-        }
+        if (redrawOnMouseEvent) { resizeChildren();   }
         auto consumed = false;
-        auto insideWidget = false;
         Widget *wfocus = nullptr;
         for (auto &w : children) {
             if (w->getRect().contains(x, y)) {
-                insideWidget = true;
-                consumed |= w->eventMouseDown(button, x, y);
+                consumed = true;
+                w->eventMouseDown(button, x, y);
                 wfocus = w.get();
                 if (w->redrawOnMouseEvent) {
                     w->refresh();
-                }
-                if (consumed) {
-                    break;
                 }
             }
         }
@@ -559,77 +552,66 @@ namespace lysa::ui {
         if (redrawOnMouseEvent) {
             refresh();
         }
-        auto event   = UIEventMouseButton{.button = button, .x = x, .y = y};
+        auto event = UIEventMouseButton{.button = button, .x = x, .y = y};
         event.source = this;
-        // emit(UIEvent::OnMouseDown, &event);
-        // consumed |= event.consumed;
-        return consumed | insideWidget;
+        ctx.events.push({UIEvent::OnMouseDown, event, id});
+        return consumed;
     }
 
     bool Widget::eventMouseUp(const MouseButton button, const float x, const float y) {
         if (!enabled) { return false; }
         pushed = false;
-        if (redrawOnMouseEvent) {
-            resizeChildren();
-        }
+        if (redrawOnMouseEvent) { resizeChildren(); }
         auto consumed = false;
-        auto insideWidget = false;
         for (const auto &w : children) {
             if (w->getRect().contains(x, y) || w->isPushed()) {
-                insideWidget = true;
-                consumed |= w->eventMouseUp(button, x, y);
+                consumed = true;
+                w->eventMouseUp(button, x, y);
                 if (w->redrawOnMouseEvent) {
                     w->refresh();
                 }
-                if (consumed) {
-                    break;
-                }
             }
         }
-        if (redrawOnMouseEvent) {
-            refresh();
-        }
+        if (redrawOnMouseEvent) { refresh();}
         auto uiEvent = UIEventMouseButton{
             .button = button,
             .x = x,
             .y = y
         };
         uiEvent.source = this;
-        auto event = Event { UIEvent::OnMouseUp, uiEvent };
-        ctx.events.fire(event);
-        consumed |= event.consumed;
-        return consumed | insideWidget;
+        ctx.events.push(Event { UIEvent::OnMouseUp, uiEvent, id});
+        return consumed;
     }
 
-    bool Widget::eventMouseMove(const uint32 B, const float x, const float y) {
-        if (!enabled) {
-            return false;
-        }
-        auto consumed = false;
-        auto p        = rect.contains(x, y);
-        for (auto &w : children) {
-            p = w->getRect().contains(x, y);
-            if (w->redrawOnMouseMove && (w->pointed != p)) {
-                w->pointed = p;
-                w->refresh();
-            }
-            if (p) {
-                consumed |= w->eventMouseMove(B, x, y);
-            } /*  else if (w->pushed) {
-                consumed |= w->eventMouseUp(B, X, Y);
-            } */
-            if (consumed) {
-                break;
-            }
-        }
-        if (redrawOnMouseMove && (pointed != p)) {
-            refresh();
-        }
-        auto event   = UIEventMouseMove{.buttonsState = B, .x = x, .y = y};
-        event.source = this;
-        // emit(UIEvent::OnMouseMove, &event);
-        // consumed |= event.consumed;
-        return consumed;
+    void Widget::eventMouseMove(const uint32 B, const float x, const float y) {
+        // if (!enabled) {
+        //     return false;
+        // }
+        // auto consumed = false;
+        // auto p        = rect.contains(x, y);
+        // for (auto &w : children) {
+        //     p = w->getRect().contains(x, y);
+        //     if (w->redrawOnMouseMove && (w->pointed != p)) {
+        //         w->pointed = p;
+        //         w->refresh();
+        //     }
+        //     if (p) {
+        //         consumed |= w->eventMouseMove(B, x, y);
+        //     } /*  else if (w->pushed) {
+        //         consumed |= w->eventMouseUp(B, X, Y);
+        //     } */
+        //     if (consumed) {
+        //         break;
+        //     }
+        // }
+        // if (redrawOnMouseMove && (pointed != p)) {
+        //     refresh();
+        // }
+        // auto event   = UIEventMouseMove{.buttonsState = B, .x = x, .y = y};
+        // event.source = this;
+        // // emit(UIEvent::OnMouseMove, &event);
+        // // consumed |= event.consumed;
+        // return consumed;
     }
 
     void Widget::eventGotFocus() {

@@ -17,18 +17,17 @@ namespace lysa::ui {
     }
 
     bool Button::eventMouseUp(const MouseButton button, const float x, const float y) {
-        const bool p = isPushed();
-        if (p && (!getRect().contains(x, y))) {
-            setPushed(false);
-            resizeChildren();
-            return Box::eventMouseUp(button, x, y);
+        if (isPushed()) {
+            if (!getRect().contains(x, y)) {
+                setPushed(false);
+                resizeChildren();
+            } else {
+                Box::eventMouseUp(button, x, y);
+                ctx.events.push(Event{ UIEvent::OnClick, UIEventClick{}, id});
+                return true;
+            }
         }
-        const bool consumed = Box::eventMouseUp(button, x, y);
-        if ((!consumed) && p) {
-            auto event = Event{ UIEvent::OnClick,UIEventClick{}};
-            ctx.events.fire(event);
-            return event.consumed;
-        }
-        return consumed;
+        Box::eventMouseUp(button, x, y);
+        return false;
     }
 }
