@@ -531,16 +531,17 @@ namespace lysa::ui {
     }
 
     bool Widget::eventMouseDown(const MouseButton button, const float x, const float y) {
-        if (!enabled) {
-            return false;
+        if (!enabled) { return false;}
+        pushed = true;
+        if (redrawOnMouseEvent) {
+            resizeChildren();
         }
         auto consumed = false;
-        pushed        = true;
-        if (redrawOnMouseEvent)
-            resizeChildren();
+        auto insideWidget = false;
         Widget *wfocus = nullptr;
         for (auto &w : children) {
             if (w->getRect().contains(x, y)) {
+                insideWidget = true;
                 consumed |= w->eventMouseDown(button, x, y);
                 wfocus = w.get();
                 if (w->redrawOnMouseEvent) {
@@ -561,19 +562,20 @@ namespace lysa::ui {
         event.source = this;
         // emit(UIEvent::OnMouseDown, &event);
         consumed |= event.consumed;
-        return consumed;
+        return consumed | insideWidget;
     }
 
     bool Widget::eventMouseUp(const MouseButton button, const float x, const float y) {
-        if (!enabled) {
-            return false;
+        if (!enabled) { return false; }
+        pushed = false;
+        if (redrawOnMouseEvent) {
+            resizeChildren();
         }
         auto consumed = false;
-        pushed        = false;
-        if (redrawOnMouseEvent)
-            resizeChildren();
+        auto insideWidget = false;
         for (const auto &w : children) {
             if (w->getRect().contains(x, y) || w->isPushed()) {
+                insideWidget = true;
                 consumed |= w->eventMouseUp(button, x, y);
                 if (w->redrawOnMouseEvent) {
                     w->refresh();
@@ -590,7 +592,7 @@ namespace lysa::ui {
         event.source = this;
         // emit(UIEvent::OnMouseUp, &event);
         consumed |= event.consumed;
-        return consumed;
+        return consumed | insideWidget;
     }
 
     bool Widget::eventMouseMove(const uint32 B, const float x, const float y) {

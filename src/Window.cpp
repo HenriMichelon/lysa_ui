@@ -193,7 +193,9 @@ namespace lysa::ui {
     bool Window::eventMouseUp(const MouseButton B, const float X, const float Y) {
         if (!visible) { return false; }
         bool consumed = false;
-        if (widget) { consumed = widget->eventMouseUp(B, X, Y); }
+        if (widget) {
+            consumed = widget->eventMouseUp(B, X, Y);
+        }
         if (!consumed) {
             consumed |= onMouseUp(B, X, Y);
         }

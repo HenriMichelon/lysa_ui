@@ -206,8 +206,7 @@ namespace lysa::ui {
                     const auto ly = std::ceil(y - window->getRect().y);
                     if (mouseInputEvent.pressed) {
                         if (window->getRect().contains(x, y)) {
-                            window->eventMouseDown(mouseInputEvent.button, lx, ly);
-                            consumed = true;
+                            consumed |= window->eventMouseDown(mouseInputEvent.button, lx, ly);
                         }
                     } else {
                         consumed |= window->eventMouseUp(mouseInputEvent.button, lx, ly);
