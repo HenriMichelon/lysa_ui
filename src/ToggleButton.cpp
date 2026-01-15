@@ -19,8 +19,7 @@ namespace lysa::ui {
     bool ToggleButton::eventMouseUp(const MouseButton button, const float x, const float y)  {
         CheckWidget::eventMouseUp(button, x, y);
         if (getRect().contains(x, y)) {
-            // auto event = EventClick{};
-            // emit(UIEvent::OnClick, &event);
+            ctx.events.push({UIEvent::OnClick, UIEventClick{}, id});
             return true;
         }
         return false;

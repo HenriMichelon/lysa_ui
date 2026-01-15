@@ -52,7 +52,6 @@ namespace lysa::ui {
         refresh();
     }
 
-
     void Image::setAutoSize(const bool autoSize) {
         if (autoSize == this->autoSize) {
             return;

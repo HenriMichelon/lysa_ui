@@ -254,7 +254,7 @@ namespace lysa::ui {
 
         virtual bool eventMouseUp(MouseButton button, float x, float y);
 
-        virtual void eventMouseMove(uint32, float x, float y);
+        virtual bool eventMouseMove(uint32, float x, float y);
 
         virtual void eventGotFocus();
 

@@ -16,8 +16,7 @@ namespace lysa::ui {
         state = newState;
         resizeChildren();
         refresh();
-        auto stat = UIEventState{.state = newState};
-        // emit(UIEvent::OnStateChange, &stat);
+        ctx.events.push({UIEvent::OnStateChange, UIEventState{.state = newState}, id});
     }
 
     bool CheckWidget::eventMouseDown(const MouseButton button, const float x, const float y) {

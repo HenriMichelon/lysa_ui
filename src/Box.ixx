@@ -14,7 +14,7 @@ export namespace lysa::ui {
     /**
      * %A rectangular box
      */
-    class Box: public Panel {
+    class Box : public Panel {
     public:
         Box(Context& ctx): Panel{ctx, BOX} {}
 

@@ -42,7 +42,7 @@ namespace lysa::ui {
         return false;
     }
 
-    void ScrollBar::eventMouseMove(const uint32 button, const float x, const float y) {
+    bool ScrollBar::eventMouseMove(const uint32 button, const float x, const float y) {
         if (onScroll) {
             if (getRect().contains(x, y)) {
                 float diff;
@@ -65,13 +65,13 @@ namespace lysa::ui {
                     value = std::min(std::max(newval, min), max);
                     eventValueChange(prev);
                 }
+                return true;
             }
             else {
                 onScroll = false;
             }
         }
-        ValueSelect::eventMouseMove(button, x, y);
-        // return true;
+        return ValueSelect::eventMouseMove(button, x, y);
     }
 
     void ScrollBar::eventRangeChange() {

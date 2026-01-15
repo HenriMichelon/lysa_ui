@@ -63,7 +63,6 @@ export namespace lysa::ui {
         static const std::string OnResize;
         //! a Window position changed
         static const std::string OnMove;
-        Widget* source;
     };
 
     /**

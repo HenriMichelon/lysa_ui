@@ -35,8 +35,7 @@ namespace lysa::ui {
         resizeChildren();
         eventRangeChange();
         refresh();
-        auto event = UIEventRange{.min = min, .max = max, .value = value};
-        // emit(UIEvent::OnRangeChange, &event);
+        ctx.events.push({UIEvent::OnRangeChange, UIEventRange{.min = min, .max = max, .value = value}, id});
     }
 
     void ValueSelect::setMax(const float max) {
@@ -48,8 +47,7 @@ namespace lysa::ui {
         }
         resizeChildren();
         eventRangeChange();
-        auto event = UIEventRange{.min = min, .max = max, .value = value};
-        // emit(UIEvent::OnRangeChange, &event);
+        ctx.events.push({UIEvent::OnRangeChange, UIEventRange{.min = min, .max = max, .value = value}, id});
     }
 
     void ValueSelect::setValue(const float value) {
@@ -67,8 +65,7 @@ namespace lysa::ui {
         if (parent) {
             parent->refresh();
         }
-        auto event = UIEventValue{.value = this->value, .previous = prev};
-        // emit(UIEvent::OnValueChange, &event);
+        ctx.events.push({UIEvent::OnValueChange, UIEventValue{.value = this->value, .previous = prev}, id});
     }
 
     void ValueSelect::setStep(const float step) {
@@ -85,13 +82,11 @@ namespace lysa::ui {
     }
 
     void ValueSelect::eventRangeChange() {
-        auto event = UIEventRange{.min = min, .max = max, .value = value};
-        // emit(UIEvent::OnRangeChange, &event);
+        ctx.events.push({UIEvent::OnRangeChange, UIEventRange{.min = min, .max = max, .value = value}, id});
     }
 
     void ValueSelect::eventValueChange(const float prev) {
-        auto event = UIEventValue{.value = value, .previous = prev};
-        // emit(UIEvent::OnValueChange, &event);
+        ctx.events.push({UIEvent::OnValueChange, UIEventRange{.min = min, .max = max, .value = value}, id});
     }
 
 }

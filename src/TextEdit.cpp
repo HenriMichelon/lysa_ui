@@ -27,9 +27,7 @@ namespace lysa::ui {
         textBox->setText(text.substr(startPos, nDispChar + 1));
         box->refresh();
         refresh();
-        auto event = UIEventTextChange{.text = text};
-        event.source = this;
-        // emit(UIEvent::OnTextChange, &event);
+        ctx.events.push({UIEvent::OnTextChange, UIEventTextChange{.text = text}, id});
     }
 
     void TextEdit::setSelStart(const uint32 start) {

@@ -47,7 +47,7 @@ export namespace lysa::ui {
 
         bool eventMouseUp(MouseButton button, float x, float y) override;
 
-        void eventMouseMove(uint32 button, float x, float y) override;
+        bool eventMouseMove(uint32 button, float x, float y) override;
 
         void eventRangeChange() override;
 
