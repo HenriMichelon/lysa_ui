@@ -6,7 +6,7 @@
 */
 export module lysa.ui.event;
 
-import lysa.event;
+export import lysa.event;
 import lysa.input_event;
 import lysa.types;
 import lysa.ui.widget;
@@ -68,77 +68,69 @@ export namespace lysa::ui {
     };
 
     /**
-     * Parameter for Event::OnClick
+     * Parameter for UIEvent::OnClick
      */
-    struct EventClick : UIEvent {
-        //! set this to true if the event have been consumed and will not be passed to widgets below
-        bool consumed{false};
+    struct UIEventClick : UIEvent {
     };
 
     /**
-     * Parameters for Event::OnKeyDown and Event::OnKeyUp
+     * Parameters for UIEvent::OnKeyDown and UIEvent::OnKeyUp
      */
-    struct EventKeyb : UIEvent {
+    struct UIEventKeyb : UIEvent {
         //! Key code
         Key key;
-        //! set this to true if the event have been consumed and will not be passed to widgets & nodes below
-        bool consumed{false};
     };
 
     /**
-     * Parameters for Event::OnMouseDown and Event::OnMouseUp
+     * Parameters for UIEvent::OnMouseDown and UIEvent::OnMouseUp
      */
-    struct EventMouseButton : UIEvent {
+    struct UIEventMouseButton : UIEvent {
         //! Mouse button
         MouseButton button;
         //! X coord
         float x;
         //! Y coord
         float y;
-        //! set this to true if the event have been consumed and will not be passed to widgets & nodes below
-        bool consumed{false};
     };
 
     /**
-     * Parameters for Event::OnMouseMove
+     * Parameters for UIEvent::OnMouseMove
      */
-    struct EventMouseMove : UIEvent {
+    struct UIEventMouseMove : UIEvent {
         //! Mouse button states
         uint32 buttonsState;
         //! X coord
         float x;
         //! Y coord
         float y;
-        //! set this to true if the event have been consumed and will not be passed to widgets & nodes below
-        bool consumed{false};
     };
 
     /**
-     * Parameters for Event::OnStateChange
+     * Parameters for UIEvent::OnStateChange
      */
-    struct EventState : UIEvent {
+    struct UIEventState : UIEvent {
         //! CheckWidget::State
         int32 state;
     };
 
     /**
-     * Parameters for Event::EventValue
+     * Parameters for UIEvent::EventValue
      */
-    struct EventValue : UIEvent {
+    struct UIEventValue : UIEvent {
         float value;
         float previous;
     };
 
     /**
-     * Parameters for Event::EventRange
+     * Parameters for UIEvent::EventRange
      */
-    struct EventRange : UIEvent {
+    struct UIEventRange : UIEvent {
         float min;
         float max;
         float value;
     };
 
-    struct EventTextChange : UIEvent {
+    struct UIEventTextChange : UIEvent {
         const std::string text;
     };
 
@@ -161,10 +153,10 @@ export namespace lysa::ui {
     const event_type UIEvent::OnResize{"on_resize"};
     const event_type UIEvent::OnMove{"on_move"};
     const event_type UIEvent::OnValueChange{"on_value_change"};
-    //const event_type Event::OnValueUserChange{"on_value_use_change"};
+    //const event_type UIEvent::OnValueUserChange{"on_value_use_change"};
     const event_type UIEvent::OnRangeChange{"on_range_change"};
-    /*     const event_type Event::OnInsertItem{"on_insert_item"};
-        const event_type Event::OnRemoveItem{"on_remove_item"};
-        const event_type Event::OnSelectItem{"on_select_item"};
+    /*     const event_type UIEvent::OnInsertItem{"on_insert_item"};
+        const event_type UIEvent::OnRemoveItem{"on_remove_item"};
+        const event_type UIEvent::OnSelectItem{"on_select_item"};
      */
 }

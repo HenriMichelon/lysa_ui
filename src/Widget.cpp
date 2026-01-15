@@ -11,7 +11,7 @@ import lysa.rect;
 import lysa.renderers.vector_2d;
 import lysa.resources.font;
 import lysa.ui.event;
-import lysa.ui.resource;
+import lysa.ui.uiresource;
 import lysa.ui.style;
 import lysa.ui.window;
 
@@ -91,7 +91,7 @@ namespace lysa::ui {
         eventResize();
     }
 
-    void Widget::setResource(std::shared_ptr<Resource> R) {
+    void Widget::setResource(std::shared_ptr<UIResource> R) {
         resource = std::move(R);
         refresh();
     }
@@ -511,10 +511,11 @@ namespace lysa::ui {
         if (!enabled) {
             return false;
         }
-        auto event   = EventKeyb{.key = key};
-        event.source = this;
+        auto event   = UIEventKeyb{.key = key};
+        // event.source = this;
         // emit(UIEvent::OnKeyDown, &event);
-        return event.consumed;
+        // return event.consumed;
+        return false;
     }
 
     bool Widget::eventKeyUp(const Key key) {
@@ -522,10 +523,10 @@ namespace lysa::ui {
             return false;
         }
         if (focused) {
-            auto event   = EventKeyb{.key = key};
+            auto event   = UIEventKeyb{.key = key};
             event.source = this;
             // emit(UIEvent::OnKeyUp, &event);
-            return event.consumed;
+            // return event.consumed;
         }
         return false;
     }
@@ -558,10 +559,10 @@ namespace lysa::ui {
         if (redrawOnMouseEvent) {
             refresh();
         }
-        auto event   = EventMouseButton{.button = button, .x = x, .y = y};
+        auto event   = UIEventMouseButton{.button = button, .x = x, .y = y};
         event.source = this;
         // emit(UIEvent::OnMouseDown, &event);
-        consumed |= event.consumed;
+        // consumed |= event.consumed;
         return consumed | insideWidget;
     }
 
@@ -588,9 +589,14 @@ namespace lysa::ui {
         if (redrawOnMouseEvent) {
             refresh();
         }
-        auto event   = EventMouseButton{.button = button, .x = x, .y = y};
-        event.source = this;
-        // emit(UIEvent::OnMouseUp, &event);
+        auto uiEvent = UIEventMouseButton{
+            .button = button,
+            .x = x,
+            .y = y
+        };
+        uiEvent.source = this;
+        auto event = Event { UIEvent::OnMouseUp, uiEvent };
+        ctx.events.fire(event);
         consumed |= event.consumed;
         return consumed | insideWidget;
     }
@@ -619,10 +625,10 @@ namespace lysa::ui {
         if (redrawOnMouseMove && (pointed != p)) {
             refresh();
         }
-        auto event   = EventMouseMove{.buttonsState = B, .x = x, .y = y};
+        auto event   = UIEventMouseMove{.buttonsState = B, .x = x, .y = y};
         event.source = this;
         // emit(UIEvent::OnMouseMove, &event);
-        consumed |= event.consumed;
+        // consumed |= event.consumed;
         return consumed;
     }
 

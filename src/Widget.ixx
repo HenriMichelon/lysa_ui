@@ -12,16 +12,17 @@ import lysa.rect;
 import lysa.input_event;
 import lysa.types;
 import lysa.renderers.vector_2d;
+import lysa.resources;
 import lysa.resources.font;
 import lysa.ui.alignment;
-import lysa.ui.resource;
+import lysa.ui.uiresource;
 
 namespace lysa::ui {
 
     /**
      * Base class for all UI widgets
      */
-    export class Widget  {
+    export class Widget : public UniqueResource  {
     public:
         //! Widget type
         enum Type {
@@ -197,7 +198,7 @@ namespace lysa::ui {
         void refresh() const;
 
         /** Changes widget resources. Use with caution ! */
-        void setResource(std::shared_ptr<Resource>);
+        void setResource(std::shared_ptr<UIResource>);
 
         /** Return the user defined group index */
         uint32 getGroupIndex() const;
@@ -281,7 +282,7 @@ namespace lysa::ui {
         float transparency{1.0f};
         Widget* parent{nullptr};
         Alignment alignment{Alignment::NONE};
-        std::shared_ptr<Resource> resource;
+        std::shared_ptr<UIResource> resource;
         std::list<std::shared_ptr<Widget>> children;
         Window* window{nullptr};
         void* style{nullptr};

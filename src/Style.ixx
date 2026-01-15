@@ -11,7 +11,7 @@ import lysa.context;
 import lysa.rect;
 import lysa.resources.font;
 import lysa.renderers.vector_2d;
-import lysa.ui.resource;
+import lysa.ui.uiresource;
 import lysa.ui.widget;
 
 namespace lysa::ui {
@@ -53,12 +53,12 @@ namespace lysa::ui {
          * @param resources : resources used for drawing this widget
          * @param when : `true` = before drawing children, `false` = after
         */
-        virtual void draw(const Widget &widget, Resource &resources, Vector2DRenderer &render, bool when) const = 0;
+        virtual void draw(const Widget &widget, UIResource &resources, Vector2DRenderer &render, bool when) const = 0;
 
         /**
          * Adjusts a widget size to style specific constraints
         */
-        virtual void resize(Widget &widget, Rect &rect, Resource &resources) = 0;
+        virtual void resize(Widget &widget, Rect &rect, UIResource &resources) = 0;
 
         /**
          * Returns the default font for the style.

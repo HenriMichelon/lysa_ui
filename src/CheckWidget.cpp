@@ -16,7 +16,7 @@ namespace lysa::ui {
         state = newState;
         resizeChildren();
         refresh();
-        auto stat = EventState{.state = newState};
+        auto stat = UIEventState{.state = newState};
         // emit(UIEvent::OnStateChange, &stat);
     }
 

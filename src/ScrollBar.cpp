@@ -92,7 +92,7 @@ namespace lysa::ui {
         }
     }
 
-    void ScrollBar::onLiftAreaDown(const EventMouseButton* event) {
+    void ScrollBar::onLiftAreaDown(const UIEventMouseButton* event) {
         if (liftCage->getRect().contains(event->x, event->y)) { return; }
         const float longStep = step * LONGSTEP_MUX;
         float diff = 0;
@@ -118,7 +118,7 @@ namespace lysa::ui {
         ValueSelect::eventValueChange(prev);
     }
 
-    void ScrollBar::onLiftCageDown(const EventMouseButton* event) {
+    void ScrollBar::onLiftCageDown(const UIEventMouseButton* event) {
         onScroll = true;
         if (type == VERTICAL) {
             scrollStart = event->y - liftCage->getRect().y;

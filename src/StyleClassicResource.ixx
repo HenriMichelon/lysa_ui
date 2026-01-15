@@ -9,11 +9,11 @@ export module lysa.ui.style_classic_resource;
 import lysa.math;
 import lysa.types;
 
-import lysa.ui.resource;
+import lysa.ui.uiresource;
 
 export namespace lysa::ui {
 
-    class StyleClassicResource : public Resource {
+    class StyleClassicResource : public UIResource {
     public:
         enum Style {
             FLAT,

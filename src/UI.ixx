@@ -15,7 +15,7 @@ export import lysa.ui.frame;
 export import lysa.ui.image;
 export import lysa.ui.line;
 export import lysa.ui.panel;
-export import lysa.ui.resource;
+export import lysa.ui.uiresource;
 export import lysa.ui.scroll_bar;
 export import lysa.ui.style;
 export import lysa.ui.style_classic;

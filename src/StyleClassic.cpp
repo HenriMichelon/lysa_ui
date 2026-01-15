@@ -27,7 +27,7 @@ namespace lysa::ui {
         }*/
     }
 
-    void StyleClassic::draw(const Widget &widget, Resource &resources, Vector2DRenderer &renderer, const bool before) const {
+    void StyleClassic::draw(const Widget &widget, UIResource &resources, Vector2DRenderer &renderer, const bool before) const {
         auto &res = static_cast<StyleClassicResource &>(resources);
         if (!widget.isVisible()) {
             return;
@@ -153,7 +153,7 @@ namespace lysa::ui {
         }
     }
 
-    void StyleClassic::resize(Widget &widget, Rect &rect, Resource &) {
+    void StyleClassic::resize(Widget &widget, Rect &rect, UIResource &) {
         switch (widget.getType()) {
         case Widget::BOX:
         case Widget::BUTTON:

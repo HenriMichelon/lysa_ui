@@ -147,9 +147,9 @@ namespace lysa::ui {
             consumed |= onKeyDown(K);
         }
         if (!consumed) {
-            auto event = EventKeyb{.key = K};
+            auto event = UIEventKeyb{.key = K};
             // emit(UIEvent::OnKeyDown, &event);
-            consumed = event.consumed;
+            // consumed = event.consumed;
         }
         refresh();
         return consumed;
@@ -164,9 +164,9 @@ namespace lysa::ui {
             consumed |= onKeyUp(K);
         }
         if (!consumed) {
-            auto event = EventKeyb{.key = K};
+            auto event = UIEventKeyb{.key = K};
             // emit(UIEvent::OnKeyUp, &event);
-            consumed = event.consumed;
+            // consumed = event.consumed;
         }
         refresh();
         return consumed;
@@ -182,9 +182,9 @@ namespace lysa::ui {
             consumed |= onMouseDown(B, X, Y);
         }
         if (!consumed) {
-            auto event = EventMouseButton{.button = B, .x = X, .y = Y};
+            auto event = UIEventMouseButton{.button = B, .x = X, .y = Y};
             // emit(UIEvent::OnMouseDown, &event);
-            consumed = event.consumed;
+            // consumed = event.consumed;
         }
         refresh();
         return consumed;
@@ -200,9 +200,9 @@ namespace lysa::ui {
             consumed |= onMouseUp(B, X, Y);
         }
         if (!consumed) {
-            auto event = EventMouseButton{.button = B, .x = X, .y = Y};
+            auto event = UIEventMouseButton{.button = B, .x = X, .y = Y};
             // emit(UIEvent::OnMouseUp, &event);
-            consumed = event.consumed;
+            // consumed = event.consumed;
         }
         refresh();
         return consumed;
@@ -221,9 +221,9 @@ namespace lysa::ui {
             consumed |= onMouseMove(B, X, Y);
         }
         if (!consumed) {
-            auto event = EventMouseMove{.buttonsState = B, .x = X, .y = Y};
+            auto event = UIEventMouseMove{.buttonsState = B, .x = X, .y = Y};
             // emit(UIEvent::OnMouseMove, &event);
-            consumed = event.consumed;
+            // consumed = event.consumed;
         }
         if (consumed) { refresh(); }
         return consumed;

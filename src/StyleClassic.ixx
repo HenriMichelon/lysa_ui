@@ -14,7 +14,7 @@ import lysa.ui.check_widget;
 import lysa.ui.frame;
 import lysa.ui.line;
 import lysa.ui.panel;
-import lysa.ui.resource;
+import lysa.ui.uiresource;
 import lysa.ui.scroll_bar;
 import lysa.ui.style;
 import lysa.ui.style_classic_resource;
@@ -32,11 +32,11 @@ export namespace lysa::ui {
     public:
         ~StyleClassic() override = default;
 
-        void draw(const Widget &widget, Resource &resources, Vector2DRenderer &renderer, bool before) const override;
+        void draw(const Widget &widget, UIResource &resources, Vector2DRenderer &renderer, bool before) const override;
 
         void addResource(Widget &widget, const std::string &resources) override;
 
-        void resize(Widget &widget, Rect &rect, Resource &resources) override;
+        void resize(Widget &widget, Rect &rect, UIResource &resources) override;
 
     private:
         float4 focus{};

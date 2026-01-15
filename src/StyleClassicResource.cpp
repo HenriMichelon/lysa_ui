@@ -11,7 +11,7 @@ import lysa.utils;
 namespace lysa::ui {
 
     StyleClassicResource::StyleClassicResource(const std::string &resource) :
-        Resource{resource} {
+        UIResource{resource} {
         splitResString(resource);
     }
     void StyleClassicResource::splitResString(const std::string &resource) {

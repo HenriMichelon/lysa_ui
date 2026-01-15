@@ -27,7 +27,7 @@ namespace lysa::ui {
         textBox->setText(text.substr(startPos, nDispChar + 1));
         box->refresh();
         refresh();
-        auto event = EventTextChange{.text = text};
+        auto event = UIEventTextChange{.text = text};
         event.source = this;
         // emit(UIEvent::OnTextChange, &event);
     }

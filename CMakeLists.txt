@@ -114,7 +114,7 @@ set(LYSA_UI_MODULES
         ${SRC_DIR}/Image.ixx
         ${SRC_DIR}/Line.ixx
         ${SRC_DIR}/Panel.ixx
-        ${SRC_DIR}/Resource.ixx
+        ${SRC_DIR}/UIResource.ixx
         ${SRC_DIR}/ScrollBar.ixx
         ${SRC_DIR}/Style.ixx
         ${SRC_DIR}/StyleClassic.ixx
