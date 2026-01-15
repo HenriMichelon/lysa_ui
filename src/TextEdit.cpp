@@ -13,6 +13,7 @@ namespace lysa::ui {
     TextEdit::TextEdit(Context& ctx, const std::string& text):
         Widget{ctx, TEXTEDIT},
         text(text)  {
+        allowFocus = true;
     }
 
     void TextEdit::computeNDispChar() {
@@ -51,7 +52,7 @@ namespace lysa::ui {
 
     void TextEdit::setResources(const std::string& resource) {
         if (box == nullptr) {
-            box = create<Box>(resource, Alignment::FILL);
+            box = create<Box>(resource + ",LOWERED", Alignment::FILL);
             textBox = box->create<Text>(Alignment::HCENTER, text);
         }
         selStart = 0;

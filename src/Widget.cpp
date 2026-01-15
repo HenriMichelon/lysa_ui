@@ -131,14 +131,15 @@ namespace lysa::ui {
         if (F && (!allowFocus)) {
             for (const auto &child : children) {
                 const auto w = child->setFocus(F);
-                if (w)
+                if (w) {
                     return w;
+                }
             }
             return nullptr;
         }
 
         if (focused != F) {
-            focused    = F;
+            focused = F;
             if (F) {
                 if (!freeze) {
                     refresh();

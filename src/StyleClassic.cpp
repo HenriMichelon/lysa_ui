@@ -375,12 +375,14 @@ namespace lysa::ui {
                 0,
                 widget.getSelStart() - widget.getFirstDisplayedChar());
             widget.getFont()->getSize(txt, widget.getFontScale(), w, h);
-            auto l = widget.getRect().x + 2 + w;
-            auto t =  widget.getRect().y - 2;
-            renderer.setPenColor(shadowDark);
+            h = widget.getTextBox()->getHeight();
+            auto l = widget.getTextBox()->getRect().x + w;
+            auto t =  widget.getTextBox()->getRect().y - 2 ;
+            // renderer.setPenColor(shadowDark);
+            renderer.setPenColor({1.0, 0.0, 0.0, 1.0});
             renderer.drawLine({l - 2, t}, {l - 2 + 5, t});
-            renderer.drawLine({l - 2, t - h}, {l - 2 + 5, t - h});
-            renderer.drawLine({l, t}, {l, t - h});
+            renderer.drawLine({l - 2, t + h}, {l - 2 + 5, t + h});
+            renderer.drawLine({l, t}, {l, t + h});
         }
     }
 

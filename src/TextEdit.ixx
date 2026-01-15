@@ -35,10 +35,9 @@ export namespace lysa::ui {
 
         auto getFirstDisplayedChar() const { return startPos; }
 
-        // return TRUE if this or parent have keyboard focus
-        //bool haveFocus();
-
         auto getDisplayedText() const { return textBox->getText(); }
+
+        auto getTextBox() const { return textBox; }
 
         void setResources(const std::string& resource);
 
