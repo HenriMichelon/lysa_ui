@@ -26,7 +26,7 @@ namespace lysa::ui {
         const bool consumed = Box::eventMouseUp(button, x, y);
         if ((!consumed) && p) {
             auto event = EventClick{};
-            // emit(UIEvent::OnClick, &event);
+            ctx.events.fire({.type = UIEvent::OnClick, .payload = event});
             return event.consumed;
         }
         return consumed;
