@@ -12,10 +12,14 @@ import lysa.ui.panel;
 export namespace lysa::ui {
 
     /**
-     * %A rectangular box
+     * A rectangular box widget.
      */
     class Box : public Panel {
     public:
+        /**
+         * Constructor.
+         * @param ctx The engine context.
+         */
         Box(Context& ctx): Panel{ctx, BOX} {}
 
     protected:

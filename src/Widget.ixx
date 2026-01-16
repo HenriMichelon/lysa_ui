@@ -20,11 +20,13 @@ import lysa.ui.uiresource;
 namespace lysa::ui {
 
     /**
-     * Base class for all UI widgets
+     * Base class for all UI widgets.
      */
     export class Widget : public UniqueResource, public std::enable_shared_from_this<Widget>  {
     public:
-        //! Widget type
+        /**
+         * Widget type enumeration.
+         */
         enum Type {
             //! transparent widget
             WIDGET,
@@ -52,72 +54,126 @@ namespace lysa::ui {
             IMAGE,
         };
 
-        /** Creates a widget of a particular type */
-        Widget(Context& ctx, Type = WIDGET);
+        /**
+         * Creates a widget of a particular type.
+         * @param ctx The engine context.
+         * @param type The type of the widget.
+         */
+        Widget(Context& ctx, Type type = WIDGET);
 
         virtual ~Widget() = default;
 
-        /** Returns the type of the widget */
+        /**
+         * Returns the type of the widget.
+         */
         Type getType() const;
 
-        /** Returns true if the widget is visible */
+        /**
+         * Returns true if the widget is visible.
+         */
         bool isVisible() const;
 
-        /** Shows or hides the widget */
+        /**
+         * Shows or hides the widget.
+         */
         void show(bool show = true);
 
-        /** Returns true is the widget is reactive to user action (mouse & keyboard) */
+        /**
+         * Returns true if the widget is reactive to user action (mouse & keyboard).
+         */
         bool isEnabled() const;
 
-        /** Enables or disables widget reactions to input events */
+        /**
+         * Enables or disables widget reactions to input events.
+         */
         void enable(bool isEnabled = true);
 
-        /** Moves the widget to a particular position. */
+        /**
+         * Moves the widget to a particular position.
+         */
         void setPos(float x, float y);
 
-        /** Returns the width of the widget, in pixels */
+        /**
+         * Returns the width of the widget, in pixels.
+         */
         float getWidth() const { return rect.width; }
 
-        /** Returns the height of the widget, in pixels */
+        /**
+         * Returns the height of the widget, in pixels.
+         */
         float getHeight() const { return rect.height; }
 
-        /** Resizes the widget */
+        /**
+         * Resizes the widget, in pixels.
+         */
         virtual void setSize(float width, float height);
 
-        /** Returns the size & the position of the widget */
+        /**
+         * Returns the size & the position of the widget.
+         */
         const Rect &getRect() const;
 
-        /** Changes the size & position of the widget */
+        /**
+         * Changes the size & position of the widget.
+         */
         void setRect(float x, float y, float width, float height);
 
-        /** Changes the size & position of the widget */
+        /**
+         * Changes the size & position of the widget.
+         */
         void setRect(const Rect &rect);
 
-        /** Returns the current widget placement */
+        /**
+         * Returns the current widget placement.
+         */
         Alignment getAlignment() const;
 
-        /** Sets the widget placement. Calling this method involve
-            redrawing the parent widget & resizing all the children widgets */
+        /**
+         * Sets the widget placement.
+         *
+         * Calling this method involves redrawing the parent widget &
+         * resizing all the children widgets.
+         */
         void setAlignment(Alignment alignment);
 
-        /** Returns the current font of the widget */
+        /**
+         * Returns the current font of the widget.
+         */
         std::shared_ptr<Font> getFont() const;
 
-        /** Sets the current font of the widget */
+        /**
+         * Sets the current font of the widget.
+         */
         void setFont(const std::shared_ptr<Font>& font);
 
+        /**
+         * Returns the font scale.
+         */
         float getFontScale() const;
 
+        /**
+         * Sets the font scale.
+         */
         virtual void setFontScale(float fontScale);
 
-        /** Returns true if the widget has keyboard focus */
+        /**
+         * Returns true if the widget has keyboard focus.
+         */
         bool isFocused() const;
 
-        /** Returns the parent widget, or nullptr */
+        /**
+         * Returns the parent widget, or nullptr.
+         */
         Widget* getParent() const { return parent; }
 
-        /*
-         * Creates & adds a child widget.
+        /**
+         * Creates & adds a child widget using a resource string.
+         * @tparam T The type of the widget to create.
+         * @tparam Args The types of the arguments to pass to the widget constructor.
+         * @param resource The resource string defining the widget style or properties.
+         * @param alignment The alignment of the child widget.
+         * @param args The arguments to pass to the widget constructor.
+         * @return A shared pointer to the created widget.
          */
         template<typename T, typename... Args>
         std::shared_ptr<T> create(
@@ -130,8 +186,13 @@ namespace lysa::ui {
                 resource);
         }
 
-        /*
+        /**
          * Creates & adds a child widget.
+         * @tparam T The type of the widget to create.
+         * @tparam Args The types of the arguments to pass to the widget constructor.
+         * @param alignment The alignment of the child widget.
+         * @param args The arguments to pass to the widget constructor.
+         * @return A shared pointer to the created widget.
          */
         template<typename T, typename... Args>
         std::shared_ptr<T> create(
@@ -142,14 +203,17 @@ namespace lysa::ui {
                 alignment);
         }
 
-        /** Adds a child widget.
-              Children widgets will be destroyed on parent destruction.
-                \param child	: child widget to add
-                \param alignment: placement
-                \param resource	: resource string
-                \param overlap : overlap widget on top of other widgets
-
-        */
+        /**
+         * Adds a child widget.
+         *
+         * Children widgets will be destroyed on parent destruction.
+         * @tparam T The type of the widget to add.
+         * @param child Child widget to add.
+         * @param alignment Placement alignment.
+         * @param resource Resource string.
+         * @param overlap Overlap widget on top of other widgets.
+         * @return A shared pointer to the added widget.
+         */
         template<typename T>
         std::shared_ptr<T> add(
             std::shared_ptr<T> child,
@@ -163,72 +227,139 @@ namespace lysa::ui {
             return child;
         }
 
-        /** Removes a child widget */
+        /**
+         * Removes a child widget.
+         */
         virtual void remove(const std::shared_ptr<Widget> &child);
 
-        /** Removes all children's widgets recursively */
+        /**
+         * Removes all children widgets recursively.
+         */
         virtual void removeAll();
 
-        /** Changes children padding (space between children) */
+        /**
+         * Changes children padding (space between children).
+         */
         void setPadding(float padding);
 
-        /** Returns current children padding (space between children) */
+        /**
+         * Returns current children padding.
+         */
         float getPadding() const;
 
+        /**
+         * Returns vertical border size.
+         */
         float getVBorder() const;
 
+        /**
+         * Returns horizontal border size.
+         */
         float getHBorder() const;
 
+        /**
+         * Sets vertical border size.
+         */
         void setVBorder(float size);
 
+        /**
+         * Sets horizontal border size.
+         */
         void setHBorder(float size);
 
-        /** Returns false if the background is transparent */
+        /**
+         * Returns false if the background is transparent.
+         */
         bool isDrawBackground() const;
 
-        /** Sets to false make the widget background transparent */
+        /**
+         * Sets whether to draw the widget background.
+         */
         void setDrawBackground(bool drawBackground);
 
+        /**
+         * Returns true if the widget is currently pushed (e.g. mouse button down).
+         */
         bool isPushed() const;
 
+        /**
+         * Returns true if the widget is currently pointed by the mouse.
+         */
         bool isPointed() const;
 
+        /**
+         * Returns true if the widget is freezed (not responding to events).
+         */
         bool isFreezed() const;
 
+        /**
+         * Returns true if the widget should redraw on mouse events.
+         */
         bool isRedrawOnMouseEvent() const;
 
+        /**
+         * Returns true if the widget is overlapping other widgets.
+         */
         bool isOverlapping() const { return overlap; }
 
+        /**
+         * Returns the rectangle enclosing all children.
+         */
         Rect getChildrenRect() const;
 
+        /**
+         * Sets whether the widget is freezed.
+         */
         void setFreezed(const bool f) { freeze = f; }
 
+        /**
+         * Sets whether the widget is pushed.
+         */
         void setPushed(const bool p) { pushed = p; }
 
-        /** Force a refresh of the entire widget */
+        /**
+         * Force a refresh of the entire widget.
+         */
         void refresh() const;
 
-        /** Changes widget resources. Use with caution ! */
-        void setResource(std::shared_ptr<UIResource>);
+        /**
+         * Changes widget resources.
+         */
+        void setResource(std::shared_ptr<UIResource> resource);
 
-        /** Return the user defined group index */
+        /**
+         * Returns the user defined group index.
+         */
         uint32 getGroupIndex() const;
 
-        /** Set the user defined group index */
+        /**
+         * Sets the user defined group index.
+         */
         void setGroupIndex(int32 index);
 
-        /** Returns the user data */
+        /**
+         * Returns the user data.
+         */
         void* getUserData() const;
 
-        /** set user data */
+        /**
+         * Sets user data.
+         */
         void setUserData(void *data);
 
-        /** Return the transparency alpha value */
+        /**
+         * Returns the transparency alpha value.
+         */
         float getTransparency() const { return transparency; }
 
-        /** Changes the transparency alpha value */
+        /**
+         * Changes the transparency alpha value.
+         */
         void setTransparency(float alpha);
 
+        /**
+         * Resizes children widgets.
+         */
         void resizeChildren();
 
         void _setRedrawOnMouseEvent(const bool r) { redrawOnMouseEvent = r; }

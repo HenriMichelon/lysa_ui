@@ -14,122 +14,91 @@ import lysa.ui.widget;
 export namespace lysa::ui {
 
     /**
-     * List of widgets events signals
+     * List of widget event signals.
      */
     struct UIEvent {
-        //! called after widget creation (all widgets)
-        static const std::string OnCreate;
-        //! called before widget destruction (all widgets)
-        static const std::string OnDestroy;
-        //! called when the user press a key & the widget have the keyboard focus (all widgets)
-        static const std::string OnKeyDown;
-        //! called when the user press a key & the widget have the keyboard focus (all widgets)
-        static const std::string OnKeyUp;
-        //! the mouse button have been pressed above the widget or a child (all widgets)
-        static const std::string OnMouseDown;
-        //! the mouse button have been pressed above the widget or a child (all widgets)
-        static const std::string OnMouseUp;
-        //! the mouse have been moved above the widget (all widgets)
-        static const std::string OnMouseMove;
-        //! widget acquire keyboard focus (all widgets)
-        static const std::string OnGotFocus;
-        //! widget lost keyboard focus (all widgets)
-        static const std::string OnLostFocus;
-        //! called after visibility change (all widgets)
-        static const std::string OnShow;
-        //! called before visibility change (all widgets)
-        static const std::string OnHide;
-        //! called after state change (all widgets)
-        static const std::string OnEnable;
-        //! called after state change (all widgets)
-        static const std::string OnDisable;
-        //! text content of the widget have changed
-        static const std::string OnTextChange;
-        //! called when the user click on the widget (buttons)
-        static const std::string OnClick;
-        //! a CheckWidget state changed
-        static const std::string OnStateChange;
-        //! value of a ValueSelect widget changed
-        static const std::string OnValueChange;
-        //! value of a ValueSelect widget changed by the user
-        //static const std::string OnValueUserChange;
-        //! range of a ValueSelect widget changed
-        static const std::string OnRangeChange;
-        //! item list of a GList widget have changed
-        //static const std::string OnInsertItem;
-        //! item list of a GList widget have changed
-        //static const std::string OnRemoveItem;
-        //! a Window size changed
-        static const std::string OnResize;
-        //! a Window position changed
-        static const std::string OnMove;
+        static const std::string OnCreate;      //!< Called after widget creation (all widgets)
+        static const std::string OnDestroy;     //!< Called before widget destruction (all widgets)
+        static const std::string OnKeyDown;     //!< Called when the user presses a key & the widget has the keyboard focus (all widgets)
+        static const std::string OnKeyUp;       //!< Called when the user releases a key & the widget has the keyboard focus (all widgets)
+        static const std::string OnMouseDown;   //!< The mouse button has been pressed above the widget or a child (all widgets)
+        static const std::string OnMouseUp;     //!< The mouse button has been released above the widget or a child (all widgets)
+        static const std::string OnMouseMove;   //!< The mouse has been moved above the widget (all widgets)
+        static const std::string OnGotFocus;    //!< Widget acquires keyboard focus (all widgets)
+        static const std::string OnLostFocus;   //!< Widget lost keyboard focus (all widgets)
+        static const std::string OnShow;        //!< Called after visibility change to visible (all widgets)
+        static const std::string OnHide;        //!< Called after visibility change to hidden (all widgets)
+        static const std::string OnEnable;      //!< Called after state change to enabled (all widgets)
+        static const std::string OnDisable;     //!< Called after state change to disabled (all widgets)
+        static const std::string OnTextChange;  //!< Text content of the widget has changed
+        static const std::string OnClick;       //!< Called when the user clicks on the widget (buttons)
+        static const std::string OnStateChange; //!< A CheckWidget state changed
+        static const std::string OnValueChange; //!< Value of a ValueSelect widget changed
+        static const std::string OnRangeChange; //!< Range of a ValueSelect widget changed
+        static const std::string OnResize;      //!< A Window size changed
+        static const std::string OnMove;        //!< A Window position changed
     };
 
     /**
-     * Parameter for UIEvent::OnClick
+     * Parameter for UIEvent::OnClick.
      */
     struct UIEventClick : UIEvent {
     };
 
     /**
-     * Parameters for UIEvent::OnKeyDown and UIEvent::OnKeyUp
+     * Parameters for UIEvent::OnKeyDown and UIEvent::OnKeyUp.
      */
     struct UIEventKeyb : UIEvent {
-        //! Key code
-        Key key;
+        Key key; //!< Key code
     };
 
     /**
-     * Parameters for UIEvent::OnMouseDown and UIEvent::OnMouseUp
+     * Parameters for UIEvent::OnMouseDown and UIEvent::OnMouseUp.
      */
     struct UIEventMouseButton : UIEvent {
-        //! Mouse button
-        MouseButton button;
-        //! X coord
-        float x;
-        //! Y coord
-        float y;
+        MouseButton button; //!< Mouse button
+        float x;            //!< X coordinate
+        float y;            //!< Y coordinate
     };
 
     /**
-     * Parameters for UIEvent::OnMouseMove
+     * Parameters for UIEvent::OnMouseMove.
      */
     struct UIEventMouseMove : UIEvent {
-        //! Mouse button states
-        uint32 buttonsState;
-        //! X coord
-        float x;
-        //! Y coord
-        float y;
+        uint32 buttonsState; //!< Mouse button states bitmask
+        float x;             //!< X coordinate
+        float y;             //!< Y coordinate
     };
 
     /**
-     * Parameters for UIEvent::OnStateChange
+     * Parameters for UIEvent::OnStateChange.
      */
     struct UIEventState : UIEvent {
-        //! CheckWidget::State
-        int32 state;
+        int32 state; //!< New CheckWidget::State
     };
 
     /**
-     * Parameters for UIEvent::EventValue
+     * Parameters for UIEvent::OnValueChange.
      */
     struct UIEventValue : UIEvent {
-        float value;
-        float previous;
+        float value;    //!< New value
+        float previous; //!< Previous value
     };
 
     /**
-     * Parameters for UIEvent::EventRange
+     * Parameters for UIEvent::OnRangeChange.
      */
     struct UIEventRange : UIEvent {
-        float min;
-        float max;
-        float value;
+        float min;   //!< New minimum value
+        float max;   //!< New maximum value
+        float value; //!< Current value
     };
 
+    /**
+     * Parameters for UIEvent::OnTextChange.
+     */
     struct UIEventTextChange : UIEvent {
-        const std::string text;
+        const std::string text; //!< New text content
     };
 
     const event_type UIEvent::OnCreate{"on_create"};

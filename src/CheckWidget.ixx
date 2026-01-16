@@ -11,23 +11,28 @@ import lysa.input_event;
 import lysa.ui.widget;
 
 export namespace lysa::ui {
+
     /**
-     * Super class for all two-states widgets
+     * Base class for all two-states widgets.
      */
     class CheckWidget : public Widget {
     public:
-        //! State of the widget. Change on user action.
+        /**
+         * State of the widget.
+         */
         enum State {
-            //! Unchecked (aka OFF)
-            UNCHECK = 0,
-            //! Checked (aka ON)
-            CHECK = 1,
+            UNCHECK = 0, //! Unchecked (aka OFF)
+            CHECK = 1,   //! Checked (aka ON)
         };
 
-        //! Return the current state of the widget
+        /**
+         * Returns the current state of the widget.
+         */
         auto getState() const { return state; }
 
-        //! Change the state of the widget
+        /**
+         * Changes the state of the widget.
+         */
         virtual void setState(State newState);
 
     protected:

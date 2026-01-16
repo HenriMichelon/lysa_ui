@@ -13,10 +13,14 @@ import lysa.ui.box;
 export namespace lysa::ui {
 
     /**
-     * %A clickable Box
+     * A clickable Box widget.
      */
     class Button : public Box {
     public:
+        /**
+         * Constructor.
+         * @param ctx The engine context.
+         */
         Button(Context& ctx);
 
     protected:

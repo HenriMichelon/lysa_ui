@@ -12,10 +12,14 @@ import lysa.ui.widget;
 export namespace lysa::ui {
 
     /**
-     * %A rectangular widget with only a background
+     * A rectangular widget with only a background.
      */
     class Panel: public Widget {
     public:
+        /**
+         * Constructor.
+         * @param ctx The engine context.
+         */
         Panel(Context& ctx): Widget(ctx, PANEL) {}
 
     protected:

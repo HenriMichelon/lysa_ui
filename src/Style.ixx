@@ -17,47 +17,60 @@ import lysa.ui.widget;
 namespace lysa::ui {
 
     /**
-     * UI Widget drawing style base class
+     * UI Widget drawing style base class.
      */
     export class Style  {
     public:
+        /**
+         * Constructor.
+         */
         Style();
 
         virtual ~Style() = default;
 
         /**
          * Creates a new UI drawing style renderer.
-         *     @param name	: style name
-        */
+         * @param name Style name (e.g., "vector").
+         * @return Shared pointer to the created style.
+         */
         static std::shared_ptr<Style> create(const std::string & name= "vector");
 
         /**
          * Create a resource from a resources description string.
-         * @param widget : widget to ass resources string to
-         * @param resources : string that describe the resources of a widget
-        */
+         * @param widget Widget to associate resources with.
+         * @param resources String describing the resources.
+         */
         virtual void addResource(Widget &widget, const std::string &resources) = 0;
 
         /**
-         * Sets a style-specific option
-        */
+         * Sets a style-specific option.
+         * @param name Option name.
+         * @param value Option value.
+         */
         virtual void setOption(const std::string &name, const std::string &value);
 
         /**
-         * Returns a style-specific option value
-        */
+         * Returns a style-specific option value.
+         * @param name Option name.
+         * @return The option value as a string.
+         */
         std::string getOption(const std::string &name) const;
 
-        /* Draws a widget.
-         * @param widget : widget to draw
-         * @param resources : resources used for drawing this widget
-         * @param when : `true` = before drawing children, `false` = after
-        */
+        /**
+         * Draws a widget.
+         * @param widget Widget to draw.
+         * @param resources Resources used for drawing this widget.
+         * @param render The 2D renderer.
+         * @param when True = before drawing children, False = after.
+         */
         virtual void draw(const Widget &widget, UIResource &resources, Vector2DRenderer &render, bool when) const = 0;
 
         /**
-         * Adjusts a widget size to style specific constraints
-        */
+         * Adjusts a widget size to style specific constraints.
+         * @param widget The widget being resized.
+         * @param rect The rectangle to adjust.
+         * @param resources The widget's UI resources.
+         */
         virtual void resize(Widget &widget, Rect &rect, UIResource &resources) = 0;
 
         /**

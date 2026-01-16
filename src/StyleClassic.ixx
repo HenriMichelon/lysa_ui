@@ -27,7 +27,7 @@ import lysa.ui.widget;
 export namespace lysa::ui {
 
     /**
-     * Classic vector style UI with 3D look
+     * Classic vector style UI with 3D look.
      */
     class StyleClassic : public Style {
     public:

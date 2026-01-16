@@ -18,10 +18,17 @@ import lysa.ui.window;
 export namespace lysa::ui {
 
     /**
-     * Manage all the UI windows for a rendering window
+     * Manages all the UI windows for a rendering window.
      */
     class WindowManager {
     public:
+        /**
+         * Constructor.
+         * @param renderingWindow The rendering window to manage UI for.
+         * @param defaultFontURI URI of the default font.
+         * @param defaultFontScale Default scale for the font.
+         * @param defaultTextColor Default color for text.
+         */
         WindowManager(
             RenderingWindow& renderingWindow,
             const std::string& defaultFontURI,
@@ -31,46 +38,78 @@ export namespace lysa::ui {
         virtual ~WindowManager();
 
         /**
-        * Creates and adds a UI Window to the list of managed windows
-        */
+         * Creates and adds a UI Window to the list of managed windows.
+         * @param rect The rectangle (position and size) of the new window.
+         * @return Shared pointer to the created window.
+         */
         std::shared_ptr<Window> create(const Rect& rect) {
             return add(std::make_shared<Window>(ctx, rect));
         }
 
         /**
-         * Adds a UI Window to the list of managed windows
+         * Adds a UI Window to the list of managed windows.
+         * @param window The window to add.
+         * @return Shared pointer to the added window.
          */
         std::shared_ptr<Window> add(const std::shared_ptr<Window>& window);
 
         /**
-         * Removes a UI Window to the list of managed windows. The Window will be removed at the start of the next frame.
+         * Removes a UI Window from the list of managed windows.
+         *
+         * The Window will be removed at the start of the next frame.
          */
         void remove(const std::shared_ptr<Window>& window);
 
         /**
-         * Returns the default font loaded at creation
+         * Returns the default font loaded at creation.
          */
         std::shared_ptr<Font> getDefaultFont() const { return defaultFont; }
 
+        /**
+         * Returns the default font scale.
+         */
         auto getDefaultFontScale() const { return fontScale; }
 
+        /**
+         * Returns the default text color.
+         */
         auto getDefaultTextColor() const { return textColor; }
 
+        /**
+         * Returns the aspect ratio of the managed rendering window.
+         */
         float getAspectRatio() const { return renderingWindow.getRenderTarget().getAspectRatio(); }
 
         /**
-         * Forces a redrawing of all the UI at the start of the next frame
+         * Forces a redrawing of all the UI at the start of the next frame.
          */
         void refresh() { needRedraw = true; }
 
+        /**
+         * Returns the 2D renderer used by the manager.
+         */
         Vector2DRenderer& getRenderer() { return renderer; }
 
+        /**
+         * Returns the resize delta for window resizing.
+         */
         float getResizeDelta() const { return resizeDelta; }
 
+        /**
+         * Enables or disables UI window resizing by the user.
+         */
         void setEnableWindowResizing(const bool enable) { enableWindowResizing = enable; }
 
+        /**
+         * Draws one frame of the UI.
+         */
         void drawFrame();
 
+        /**
+         * Handles an input event.
+         * @param inputEvent The input event to process.
+         * @return True if the event was handled by the UI, false otherwise.
+         */
         bool onInput(const InputEvent& inputEvent);
 
     private:

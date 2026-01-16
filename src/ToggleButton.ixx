@@ -12,10 +12,15 @@ import lysa.ui.check_widget;
 
 export namespace lysa::ui {
     /**
-     * Two states clickable button
+     * @class ToggleButton
+     * A two-states clickable button widget.
      */
     class ToggleButton : public CheckWidget {
     public:
+        /**
+         * Constructor.
+         * @param ctx The engine context.
+         */
         ToggleButton(Context& ctx);
 
     protected:

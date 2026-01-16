@@ -14,24 +14,46 @@ import lysa.ui.widget;
 export namespace lysa::ui {
 
     /**
-     * %A widget to display a line of text
+     * A widget to display a line of text.
      */
     class Text : public Widget {
     public:
+        /**
+         * Constructor.
+         * @param ctx The engine context.
+         * @param text Initial text to display.
+         */
         Text(Context& ctx, const std::string& text = "");
 
+        /**
+         * Returns the displayed text.
+         */
         const auto& getText() const { return text; }
 
+        /**
+         * Sets the text to display.
+         */
         void setText(const std::string& text);
 
+        /**
+         * @param c The new color.
+         */
         void setTextColor(const float4 &c);
 
+        /**
+         * Returns the text color.
+         */
         auto getTextColor() const { return textColor; }
 
+        /**
+         * Sets the font scale.
+         */
         void setFontScale(float scale) override;
 
         /**
          * Returns the size for the text.
+         * @param width Output width.
+         * @param height Output height.
          */
         void getSize(float &width, float &height) const;
 
