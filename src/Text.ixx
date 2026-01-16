@@ -18,7 +18,7 @@ export namespace lysa::ui {
      */
     class Text : public Widget {
     public:
-        Text(Context& ctx, const std::string& text);
+        Text(Context& ctx, const std::string& text = "");
 
         const auto& getText() const { return text; }
 

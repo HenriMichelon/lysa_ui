@@ -6,6 +6,7 @@
 */
 module lysa.ui.text_edit;
 
+import std;
 import lysa.input;
 import lysa.log;
 import lysa.ui.alignment;
@@ -19,14 +20,15 @@ namespace lysa::ui {
     }
 
     void TextEdit::computeNDispChar() {
-        uint32 i;
         auto s = box->getWidth() - box->getHBorder() * 2 - box->getPadding() * 2;
+        const auto scale = textBox->getFontScale();
+        uint32 i;
         for (i = startPos; (i < text.size()) && (s > 0); i++) {
-            const auto width = getFont()->getWidth(text[i], textBox->getFontScale());
+            const auto width = getFont()->getWidth(text[i], scale);
             if (s < width) { break; }
             s -= width;
         }
-        nDispChar = i-startPos;
+        nDispChar = i - startPos;
     }
 
     void TextEdit::setText(const std::string& TEXT) {
@@ -38,7 +40,11 @@ namespace lysa::ui {
         text = TEXT;
         computeNDispChar();
         if (parent) { parent->refresh(); }
-        textBox->setText(text.substr(startPos, nDispChar + 1));
+        if ((startPos + nDispChar) >= text.size()) {
+            startPos = 0;
+        }
+        // Log::info(text, " : " , text.size(), " - " , startPos, " - ", nDispChar);
+        textBox->setText(text.substr(startPos, nDispChar));
         box->refresh();
         refresh();
         ctx.events.push({UIEvent::OnTextChange, UIEventTextChange{.text = text}, id});
@@ -59,6 +65,7 @@ namespace lysa::ui {
         selStart = 0;
         startPos = 0;
         computeNDispChar();
+        textBox->setText(text.substr(0, nDispChar));
     }
 
     bool TextEdit::eventKeyDown(const Key key) {
@@ -121,7 +128,7 @@ namespace lysa::ui {
         }
         computeNDispChar();
         setFreezed(false);
-        textBox->setText(text.substr(startPos, nDispChar + 1));
+        textBox->setText(text.substr(startPos, nDispChar));
         box->refresh();
         refresh();
         return true;
