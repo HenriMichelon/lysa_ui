@@ -24,7 +24,7 @@ namespace lysa::ui {
         const auto scale = textBox->getFontScale();
         uint32 i;
         for (i = startPos; (i < text.size()) && (s > 0); i++) {
-            const auto width = getFont()->getWidth(text[i], scale);
+            const auto width = getFont()->getGlyphInfo(text[i]).advance * scale * getFont()->getFontSize();
             if (s < width) { break; }
             s -= width;
         }
@@ -102,9 +102,12 @@ namespace lysa::ui {
                 (key != KEY_RIGHT_CONTROL) &&
                 (key != KEY_LEFT_CONTROL) &&
                 (key != KEY_RIGHT_ALT) &&
-                (key != KEY_LEFT_ALT)) {
+                (key != KEY_LEFT_ALT) &&
+                (key != KEY_ESCAPE) &&
+                (key != KEY_TAB) &&
+                (key != KEY_ENTER)) {
             const auto c = Input::keyToChar(key);
-            if (!c.empty()) {
+            if (!c.empty() || static_cast<int>(c[0]) < 12) {
                 setText(text.substr(0, selStart) + c +
                         text.substr(selStart, text.size() - selStart));
                 ctx.events.push({UIEvent::OnTextChange, UIEventTextChange{.text = text}, id});
