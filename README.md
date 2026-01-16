@@ -1,3 +1,5 @@
+# <span style='color: red;'>**This is an old repository with a preliminary version. For an up to date projet see [Lysa](https://github.com/LysaEngine)**</span> #
+
 # Lysa UI
 
 Lysa UI is a C++23 user interface library designed specifically for the [Lysa engine](https://github.com/HenriMichelon/lysa)
